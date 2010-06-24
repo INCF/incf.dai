@@ -20,7 +20,7 @@ class HubProxy(object):
 
     # Every hub is required to provide this
 
-    def GetCapabilities(self, format='xml'):
+    def GetCapabilities(self, output='xml'):
         """A list of all services provided by the hub"""
-        return self('GetCapabilities', format=format)
+        return self('GetCapabilities', output=output)
     
