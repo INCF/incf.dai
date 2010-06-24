@@ -23,7 +23,7 @@ setup(name='incf.dai',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          # -*- Extra requirements: -*-
+          'httplib2',
       ],
       entry_points="""
       # -*- Entry points: -*-
