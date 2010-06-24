@@ -11,12 +11,12 @@ INCF Digital Atlasing
 The internal generic call method
 
 >>> capabilities = aba('GetCapabilities',output='xml')
-Calling http://some.url/GetCapabilities?output=xml
+Calling http://some.url?request=GetCapabilities&output=xml
 
 where 'GetCapabilities' is also available as method
 
 >>> aba.GetCapabilities()
-Calling http://some.url/GetCapabilities?output=xml
+Calling http://some.url?request=GetCapabilities&output=xml
 
 Instead of constructing HubProxies directly some are known to exist
 and available from the utilities
