@@ -8,5 +8,9 @@ INCF Digital Atlasing
 >>> aba
 <incf.dai.hub.HubProxy object at ...>
 
+The internal generic call method
+
+>>> capabilities = aba('GetCapabilities',format='xml')
+Calling http://some.url/GetCapabilities?format=xml
 
 
