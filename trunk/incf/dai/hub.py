@@ -17,3 +17,10 @@ class HubProxy(object):
         qs = urllib.urlencode(kw)
         url += qs
         print "Calling %s" % url
+
+    # Every hub is required to provide this
+
+    def GetCapabilities(self, format='xml'):
+        """A list of all services provided by the hub"""
+        return self('GetCapabilities', format=format)
+    

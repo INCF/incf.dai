@@ -13,4 +13,8 @@ The internal generic call method
 >>> capabilities = aba('GetCapabilities',format='xml')
 Calling http://some.url/GetCapabilities?format=xml
 
+where 'GetCapabilities' is also available as method
+
+>>> aba.GetCapabilities()
+Calling http://some.url/GetCapabilities?format=xml
 
