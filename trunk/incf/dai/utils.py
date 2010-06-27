@@ -3,7 +3,7 @@
 from config import HUBS
 from hub import HubProxy
 
-def listHubs():
+def listHubNames():
     return list(HUBS.keys())
 
 def getHubByName(name):
