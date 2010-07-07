@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wps:ProcessDescriptions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wps" xmlns:wps="http://www.opengis.net/wps" xmlns:ows="http://www.opengis.net/ows" version="1.0.0" xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 ../wpsGetCapabilities_request.xsd">
+
+<ProcessDescription wps:processVersion="1.0.0" statusSupported="true">
+
+<ows:Identifier>GetCorrelationMap</ows:Identifier>
+
+<ows:Title>Get Correlation Map</ows:Title>
+
+<ows:Description>This method will return the URL and load the correlation map interface in the browser</ows:Description>
+
+<DataInputs>
+
+<Input>
+
+<ows:Identifier>MapPoint</ows:Identifier>
+
+<ows:Title>Map Point</ows:Title>
+
+<ows:Abstract>Point of interest on the map</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:double"/>
+
+</LiteralData>
+
+</Input>
+
+<Input>
+
+<ows:Identifier>SRSCODE</ows:Identifier>
+
+<ows:Title>Atlas Space Name</ows:Title>
+
+<ows:Abstract>Name of an atlas space such as ABA</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:string"/>
+
+</LiteralData>
+
+</Input>
+
+</DataInputs>
+
+<ProcessOutputs>
+
+<Output>
+
+<ows:Identifier>CorrelationMap</ows:Identifier>
+
+<ows:Title>Correlation Map</ows:Title>
+
+<ows:Abstract>Correlation map browser interface</ows:Abstract>
+
+<ComplexOutput>
+
+<Default>
+
+<Format>
+
+<MimeType>text/ascii</MimeType>
+
+<MimeType>http/ascii</MimeType>
+
+</Format>
+
+</Default>
+
+</ComplexOutput>
+
+</Output>
+
+</ProcessOutputs>
+
+</ProcessDescription>
+
+<ProcessDescription>
+
+<ows:Identifier>GetStructureNameByPOI</ows:Identifier>
+
+<ows:Title>Get fine/anatomic structure name by POI</ows:Title>
+
+<ows:Description>Returns fine/anatomic structures segmented for the point of interest</ows:Description>
+
+<DataInputs>
+
+<Input>
+
+<ows:Identifier>MapPoint</ows:Identifier>
+
+<ows:Title>Map point</ows:Title>
+
+<ows:Abstract>Point of interest on the map</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:double"/>
+
+</LiteralData>
+
+</Input>
+
+<Input>
+
+<ows:Identifier>Vocabulary</ows:Identifier>
+
+<ows:Title>Space name</ows:Title>
+
+<ows:Abstract>Name of an atlas space such as ABARef, or ABAVox, or WHS, or UCSD</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:string"/>
+
+</LiteralData>
+
+</Input>
+
+<Input>
+
+<ows:Identifier>Filter</ows:Identifier>
+
+<ows:Title>Strutureset</ows:Title>
+
+<ows:Abstract>Structureset:fine/anatomic</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:string"/>
+
+</LiteralData>
+
+</Input>
+
+<Input>
+
+<ows:Identifier>SRSCODE</ows:Identifier>
+
+<ows:Title>Atlas Space Name</ows:Title>
+
+<ows:Abstract>Name of an atlas space such as ABA</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:string"/>
+
+</LiteralData>
+
+</Input>
+
+</DataInputs>
+
+<ProcessOutputs>
+
+<Output>
+
+<ows:Identifier>StructureName</ows:Identifier>
+
+<ows:Title>Fine/Anatomic Structure Name</ows:Title>
+
+<ows:Abstract>Fine/Anatomic Structures segmented for the given point of interest</ows:Abstract>
+
+<ComplexOutput>
+
+<Default>
+
+<Format>
+
+<MimeType>text/ascii</MimeType>
+
+<MimeType>http/ascii</MimeType>
+
+</Format>
+
+</Default>
+
+</ComplexOutput>
+
+</Output>
+
+</ProcessOutputs>
+
+</ProcessDescription>
+
+<ProcessDescription>
+
+<ows:Identifier>Get2DImageAtPOI</ows:Identifier>
+
+<ows:Title>Get 2D Image at POI</ows:Title>
+
+<ows:Description>Returns 2 Dimensional image based on point of interest on the map</ows:Description>
+
+<DataInputs>
+
+<Input>
+
+<ows:Identifier>MapPoint</ows:Identifier>
+
+<ows:Title>Map Point</ows:Title>
+
+<ows:Abstract>Point of interest on the map</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:double"/>
+
+</LiteralData>
+
+</Input>
+
+<Input>
+
+<ows:Identifier>SRSCODE</ows:Identifier>
+
+<ows:Title>Altas Space Name</ows:Title>
+
+<ows:Abstract>Name of an atlas space such as ABA</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:string"/>
+
+</LiteralData>
+
+</Input>
+
+</DataInputs>
+
+<ProcessOutputs>
+
+<Output>
+
+<ows:Identifier>SiteURL</ows:Identifier>
+
+<ows:Title>SiteURL</ows:Title>
+
+<ows:Abstract>Site URL of an Image</ows:Abstract>
+
+<ComplexOutput>
+
+<Default>
+
+<Format>
+
+<MimeType>ascii/text</MimeType>
+
+<MimeType>http/ascii</MimeType>
+
+</Format>
+
+</Default>
+
+</ComplexOutput>
+
+</Output>
+
+</ProcessOutputs>
+
+</ProcessDescription>
+
+<ProcessDescription>
+
+<ows:Identifier>GetGenesByPOI</ows:Identifier>
+
+<ows:Title>Get genes by POI</ows:Title>
+
+<ows:Description>Returns genes segmented for the given point of interest on the map</ows:Description>
+
+<DataInputs>
+
+<Input>
+
+<ows:Identifier>MapPoint</ows:Identifier>
+
+<ows:Title>Map Point</ows:Title>
+
+<ows:Abstract>Point of interest on the map</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:double"/>
+
+</LiteralData>
+
+</Input>
+
+<Input>
+
+<ows:Identifier>SRSCODE</ows:Identifier>
+
+<ows:Title>Atlas Space Name</ows:Title>
+
+<ows:Abstract>Name of an atlas space such as ABARef, or ABAVox, or WHS, or UCSD</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:string"/>
+
+</LiteralData>
+
+</Input>
+
+</DataInputs>
+
+<ProcessOutputs>
+
+<Output>
+
+<ows:Identifier>Genes</ows:Identifier>
+
+<ows:Title>Genes</ows:Title>
+
+<ows:Abstract>Genes segmented for the given point of interest</ows:Abstract>
+
+<ComplexOutput>
+
+<Default>
+
+<Format>
+
+<MimeType>text/ascii</MimeType>
+
+<MimeType>http/ascii</MimeType>
+
+</Format>
+
+</Default>
+
+</ComplexOutput>
+
+</Output>
+
+</ProcessOutputs>
+
+</ProcessDescription>
+
+<ProcessDescription>
+
+<ows:Identifier>GetGenesByStructureName</ows:Identifier>
+
+<ows:Title>Get genes by Structure Name</ows:Title>
+
+<ows:Description>Returns genes segmented for structure name</ows:Description>
+
+<DataInputs>
+
+<Input>
+
+<ows:Identifier>StructureName</ows:Identifier>
+
+<ows:Title>Structure Name</ows:Title>
+
+<ows:Abstract>Name of the structure</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:double"/>
+
+</LiteralData>
+
+</Input>
+
+<Input>
+
+<ows:Identifier>Vocabulary</ows:Identifier>
+
+<ows:Title>Space name</ows:Title>
+
+<ows:Abstract>Name of an atlas space such as ABARef, or ABAVox, or WHS, or UCSD</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:string"/>
+
+</LiteralData>
+
+</Input>
+
+<Input>
+
+<ows:Identifier>Filter</ows:Identifier>
+
+<ows:Title>Strutureset</ows:Title>
+
+<ows:Abstract>Structureset:fine/anatomic</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:string"/>
+
+</LiteralData>
+
+</Input>
+
+</DataInputs>
+
+<ProcessOutputs>
+
+<Output>
+
+<ows:Identifier>Genes</ows:Identifier>
+
+<ows:Title>Genes</ows:Title>
+
+<ows:Abstract>Genes segmented for the given point of interest</ows:Abstract>
+
+<ComplexOutput>
+
+<Default>
+
+<Format>
+
+<MimeType>text/ascii</MimeType>
+
+<MimeType>http/ascii</MimeType>
+
+</Format>
+
+</Default>
+
+</ComplexOutput>
+
+</Output>
+
+</ProcessOutputs>
+
+</ProcessDescription>
+
+<ProcessDescription>
+
+<ows:Identifier>AtlasSpaceTransformation</ows:Identifier>
+
+<ows:Title>Atlas Space Transformation</ows:Title>
+
+<ows:Description>Finds, transforms and executes the best transformation available in the space based on the requirement</ows:Description>
+
+<DataInputs>
+
+<Input>
+
+<ows:Identifier>MapPoint</ows:Identifier>
+
+<ows:Title>Map Point</ows:Title>
+
+<ows:Abstract>Coordinates to form a map point</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:string"/>
+
+</LiteralData>
+
+</Input>
+
+<Input>
+
+<ows:Identifier>FromSRSCODE</ows:Identifier>
+
+<ows:Title>Source Atlas Space Name</ows:Title>
+
+<ows:Abstract>Name of an atlas space such as ABA, or AGEA</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:string"/>
+
+</LiteralData>
+
+</Input>
+
+<Input>
+
+<ows:Identifier>ToSRSCODE</ows:Identifier>
+
+<ows:Title>Destination Atlas Space Name</ows:Title>
+
+<ows:Abstract>Name of an atlas space such as AGEA, or ABA</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:string"/>
+
+</LiteralData>
+
+</Input>
+
+</DataInputs>
+
+<ProcessOutputs>
+
+<Output>
+
+<ows:Identifier>TransformedGeometry</ows:Identifier>
+
+<ows:Title>Transformed Geometry</ows:Title>
+
+<ows:Abstract>Returns transformed geometries</ows:Abstract>
+
+<ComplexOutput>
+
+<Default>
+
+<Format>
+
+<MimeType>text/ascii</MimeType>
+
+<MimeType>http/ascii</MimeType>
+
+</Format>
+
+</Default>
+
+</ComplexOutput>
+
+</Output>
+
+</ProcessOutputs>
+
+</ProcessDescription>
+
+</wps:ProcessDescriptions>
+
+
