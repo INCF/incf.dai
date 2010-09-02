@@ -5,14 +5,14 @@ from config import HUBS
 def listHubNames():
     return list(HUBS.keys())
 
-def getHubByName(name):
+def getHubByName(name, decorate=False):
     try:
         base_url = HUBS[name]
     except KeyError:
         print "Hub '%s' not found in %s." % (name, listHubs())
         return None
     import hub
-    return hub.HubProxy(base_url)
+    return hub.HubProxy(base_url, decorate)
 
 
 # http://code.activestate.com/recipes/534109-xml-to-python-data-structure/
