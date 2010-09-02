@@ -16,7 +16,7 @@ to share. To discover available hubs there is a utility function
 >>> hub_names = listHubNames()
 >>> hub_names.sort()
 >>> hub_names
-['aba', 'emage', 'ucsd', 'whs']
+['aba', 'emap', 'ucsd', 'whs']
 
 This provides a list of currently known hub names. (Note: atm the list
 is provided by the package since the INCF central hub managing the
