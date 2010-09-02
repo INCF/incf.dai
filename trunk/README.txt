@@ -26,21 +26,26 @@ Knowing the names of available hubs one can optain proxies objects
 specific for a particular hub by calling
 
 >>> from incf.dai.utils import getHubByName
->>> emage = getHubByName('emage')
->>> emage 
+>>> whs = getHubByName('whs')
+>>> whs 
 <incf.dai.hub.HubProxy object at ...>
 
 For introspection the URL to the service controller fort this hub is
 available as 
->>> emage.base_url
-'http://incf-dev.crbs.ucsd.edu:8080/atlas-emage?service=WPS'
+>>> whs.base_url
+'http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS'
 
 There are two methods all hubs are expected to provide:
->>> emage.GetCapabilities
+>>> whs.GetCapabilities
 <bound method HubProxy.GetCapabilities of ...>
 
->>> emage.DescribeProcess
+>>> whs.DescribeProcess
 <bound method HubProxy.DescribeProcess of ...>
+
+Calling any of those methods returns a custom response object
+>>> response = whs.GetCapabilities()
+>>> response
+<incf.dai.response.Response object at 0x...>
 
 To connect to a hub not registered with INCF Central (e.g., a local
 hub under development) one can instanciate the proxy explicitly as in 
