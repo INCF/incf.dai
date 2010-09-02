@@ -30,7 +30,7 @@ specific for a particular hub by calling
 >>> whs 
 <incf.dai.hub.HubProxy object at ...>
 
-For introspection the URL to the service controller fort this hub is
+For introspection the URL to the service controller for this hub is
 available as 
 >>> whs.base_url
 'http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS'
