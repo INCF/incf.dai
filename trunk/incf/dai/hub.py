@@ -17,13 +17,18 @@ class HubProxy(object):
         # self.proxy = httplib2.Http('.cache')   
         self.proxy = httplib2.Http()   
 
-    def __call__(self, service_id, **kw):
+    def __call__(self, service_id, version=None, **kw):
         """Generic call method invoking <base_url>/<service_id>?<querystring>
         where the <querystring> is constructed from the keyword arguments"""
-        url = self.base_url + '&request=' + service_id +'&'
+        url = self.base_url
+        if version is not None:
+            v = "&version=%s" % version
+            url += v
+        url = url + '&request=' + service_id +'&'
         qs = urllib.urlencode(kw)
         url += qs
         logger.info("Calling %s" % url)
+        print "Calling %s" % url
         return Response(self.proxy.request(url, "GET"))
         #print "Headers: ", response.headers
         #print "Content: ", response.content
@@ -37,3 +42,10 @@ class HubProxy(object):
         # put this here for now
         self.capabilities = tuple([l['ows_Identifier']
                                    for l in r['wps_ProcessOfferings']['wps_Process']])
+        return r
+
+    def DescribeProcess(self, version="1.0.0", output='xml'):
+        """Detailed description of services at the hub"""
+        r = self('DescribeProcess', version=version, output=output)
+        return r
+    
