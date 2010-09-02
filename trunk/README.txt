@@ -35,8 +35,16 @@ available as
 >>> emage.base_url
 'http://incf-dev.crbs.ucsd.edu:8080/atlas-emage?service=WPS'
 
+There are two methods all hubs are expected to provide:
+>>> emage.GetCapabilities
+<bound method HubProxy.GetCapabilities of ...>
+
+>>> emage.DescribeProcess
+<bound method HubProxy.DescribeProcess of ...>
+
 To connect to a hub not registered with INCF Central (e.g., a local
 hub under development) one can instanciate the proxy explicitly as in 
+(setting offline=True avoids ever calling the url)
 
 >>> from incf.dai.hub import HubProxy
 >>> myhub = HubProxy('http://some.url?service=WPS', offline=True)
