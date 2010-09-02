@@ -11,11 +11,14 @@ logger = logging.getLogger('incf.dai')
 class HubProxy(object):
     """ Generic proxy to an INCF DAI hub """
 
-    def __init__(self, base_url, decorate=False):
+    def __init__(self, base_url, decorate=False, offline=False):
         self.base_url = base_url
         # no cache for the time being
-        # self.proxy = httplib2.Http('.cache')   
-        self.proxy = httplib2.Http()
+        # self.proxy = httplib2.Http('.cache')
+        if offline:
+            self.proxy = LocalProxy()
+        else:
+            self.proxy = httplib2.Http()
         if decorate:
             self._addCapabilities()
 
@@ -52,4 +55,12 @@ class HubProxy(object):
         k2 = 'wps_Process'
         self.capabilities = tuple([l['ows_Identifier']
                                    for l in r[k1][k2]])
+    
+
+# helper class for offline testing
+
+class LocalProxy(object):
+    def request(self, url, *args, **kw):
+        print "Calling", url
+        return ("Dummy header", "<xml>Foo</xml>")
     

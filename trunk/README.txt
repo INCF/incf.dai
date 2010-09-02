@@ -39,7 +39,7 @@ To connect to a hub not registered with INCF Central (e.g., a local
 hub under development) one can instanciate the proxy explicitly as in 
 
 >>> from incf.dai.hub import HubProxy
->>> myhub = HubProxy('http://some.url?service=WPS')
+>>> myhub = HubProxy('http://some.url?service=WPS', offline=True)
 >>> myhub
 <incf.dai.hub.HubProxy object at ...>
 
@@ -54,7 +54,7 @@ on the hub proxy itself.
 
 >>> myhub.GetCapabilities()
 Calling http://some.url?service=WPS&request=GetCapabilities&output=xml
-
+<incf.dai.response.Response object at ...>
 
 
 
