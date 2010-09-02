@@ -1,7 +1,6 @@
 # utilities to be offered by the central hub one day - in part at least
 
 from config import HUBS
-from hub import HubProxy
 
 def listHubNames():
     return list(HUBS.keys())
@@ -12,7 +11,8 @@ def getHubByName(name):
     except KeyError:
         print "Hub '%s' not found in %s." % (name, listHubs())
         return None
-    return HubProxy(base_url)
+    import hub
+    return hub.HubProxy(base_url)
 
 
 # http://code.activestate.com/recipes/534109-xml-to-python-data-structure/
