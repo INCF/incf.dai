@@ -33,7 +33,7 @@ specific for a particular hub by calling
 For introspection the URL to the service controller fort this hub is
 available as 
 >>> emage.base_url
-'http://whs0.pdc.kth.se:8080/incf-services/service/EmageServiceController'
+'http://incf-dev.crbs.ucsd.edu:8080/atlas-emage?service=WPS'
 
 To connect to a hub not registered with INCF Central (e.g., a local
 hub under development) one can instanciate the proxy explicitly as in 
