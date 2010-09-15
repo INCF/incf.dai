@@ -27,7 +27,7 @@ specific for a particular hub by calling
 
 >>> from incf.dai.utils import getHubByName
 >>> whs = getHubByName('whs')
->>> whs 
+>>> whs # doctest: +ELLIPSIS
 <incf.dai.hub.HubProxy object at ...>
 
 For introspection the URL to the service controller for this hub is
@@ -36,15 +36,15 @@ available as
 'http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS'
 
 There are two methods all hubs are expected to provide:
->>> whs.GetCapabilities
+>>> whs.GetCapabilities  # doctest: +ELLIPSIS
 <bound method HubProxy.GetCapabilities of ...>
 
->>> whs.DescribeProcess
+>>> whs.DescribeProcess # doctest: +ELLIPSIS
 <bound method HubProxy.DescribeProcess of ...>
 
 Calling any of those methods returns a custom response object
 >>> response = whs.GetCapabilities()
->>> response
+>>> response  # doctest: +ELLIPSIS
 <incf.dai.response.Response object at 0x...>
 
 To connect to a hub not registered with INCF Central (e.g., a local
@@ -53,7 +53,7 @@ hub under development) one can instanciate the proxy explicitly as in
 
 >>> from incf.dai.hub import HubProxy
 >>> myhub = HubProxy('http://some.url?service=WPS', offline=True)
->>> myhub
+>>> myhub   # doctest: +ELLIPSIS
 <incf.dai.hub.HubProxy object at ...>
 
 The hub proxy provides a generic call method to be invoked as in 
@@ -65,7 +65,7 @@ The first argument here is a name of the function to be invoked at the
 hub but for convenience 'GetCapabilities' is also provided as a method
 on the hub proxy itself.
 
->>> myhub.GetCapabilities()
+>>> myhub.GetCapabilities()  # doctest: +ELLIPSIS
 Calling http://some.url?service=WPS&request=GetCapabilities&output=xml
 <incf.dai.response.Response object at ...>
 
