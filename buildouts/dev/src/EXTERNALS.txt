@@ -1,0 +1,3 @@
+# svn ps svn:externals . -F EXTERNALS.txt
+
+incf.dai   http://svn.incf.org/svn/incfdai/trunk
