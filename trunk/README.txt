@@ -59,14 +59,16 @@ hub under development) one can instanciate the proxy explicitly as in
 The hub proxy provides a generic call method to be invoked as in 
 
 >>> capabilities = myhub('GetCapabilities',output='xml')
-Calling http://some.url?service=WPS&request=GetCapabilities&output=xml
+Requested URL: http://some.url?service=WPS&request=GetCapabilities&output=xml
+positional arguments: ('GET',)
 
 The first argument here is a name of the function to be invoked at the
 hub but for convenience 'GetCapabilities' is also provided as a method
 on the hub proxy itself.
 
 >>> myhub.GetCapabilities()  # doctest: +ELLIPSIS
-Calling http://some.url?service=WPS&request=GetCapabilities&output=xml
+Requested URL: http://some.url?service=WPS&request=GetCapabilities&output=xml
+positional arguments: ('GET',)
 <incf.dai.response.Response object at ...>
 
 

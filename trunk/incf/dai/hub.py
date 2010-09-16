@@ -84,6 +84,10 @@ class LocalProxy(object):
     def request(self, url, *args, **kw):
         """Fake a request by printing the URL that would be called
         and returning a minimal response tuple."""
-        print "Calling", url
+        print "Requested URL:", url
+        if args:
+            print "positional arguments:", args
+        if kw:
+            print "keyword argumants:", kw
         return ("Dummy header", "<xml>Foo</xml>")
     
