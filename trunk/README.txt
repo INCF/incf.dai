@@ -12,8 +12,8 @@ In a nutshell the INCF DAI consistes of a network of so-called
 *hubs* providing whatever services the group managing the hub decided
 to share. To discover available hubs there is a utility function
 
->>> from incf.dai.utils import listHubNames
->>> hub_names = listHubNames()
+>>> from incf.dai.utils import list_hub_names
+>>> hub_names = list_hub_names()
 >>> hub_names.sort()
 >>> hub_names
 ['aba', 'emap', 'ucsd', 'whs']
@@ -25,8 +25,8 @@ registry is a fast moving target still.)
 Knowing the names of available hubs one can optain proxies objects
 specific for a particular hub by calling
 
->>> from incf.dai.utils import getHubByName
->>> whs = getHubByName('whs')
+>>> from incf.dai.utils import get_hub_by_name
+>>> whs = get_hub_by_name('whs')
 >>> whs # doctest: +ELLIPSIS
 <incf.dai.hub.HubProxy object at ...>
 

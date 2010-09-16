@@ -1,18 +1,18 @@
-# utilities to be offered by the central hub one day - in part at least
+"""utilities to be offered by the central hub one day - in part at least"""
 
-from config import HUBS
+from incf.dai.config import HUBS
 
-def listHubNames():
+def list_hub_names():
     return list(HUBS.keys())
 
-def getHubByName(name, decorate=False):
+def get_hub_by_name(name, minimal=False):
     try:
         base_url = HUBS[name]
     except KeyError:
-        print "Hub '%s' not found in %s." % (name, listHubs())
-        return None
-    import hub
-    return hub.HubProxy(base_url, decorate)
+        print "Hub '%s' not found in %s." % (name, list_hub_names())
+        raise KeyError
+    import incf.dai.hub
+    return incf.dai.hub.HubProxy(base_url, minimal)
 
 
 # http://code.activestate.com/recipes/534109-xml-to-python-data-structure/
