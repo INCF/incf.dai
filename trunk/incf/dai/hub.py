@@ -88,6 +88,6 @@ class LocalProxy(object):
         if args:
             print "positional arguments:", args
         if kw:
-            print "keyword argumants:", kw
+            print "keyword arguments:", kw
         return ("Dummy header", "<xml>Foo</xml>")
     
