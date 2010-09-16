@@ -3,9 +3,12 @@
 from incf.dai.config import HUBS
 
 def list_hub_names():
+    """Return list of ids/names of all known hubs"""
     return list(HUBS.keys())
 
 def get_hub_by_name(name, minimal=False):
+    """Return a HubProxy for the requested hub
+    Raises KeyError if no hub by that name is found"""
     try:
         base_url = HUBS[name]
     except KeyError:
@@ -28,14 +31,16 @@ def xml2obj(src):
 
     non_id_char = re.compile('[^_0-9a-zA-Z]')
     def _name_mangle(name):
+        """Get rid of unwanted characters in keys/ids"""
         return non_id_char.sub('_', name)
 
     class DataNode(object):
+        """Custom data node object"""
         def __init__(self):
             self._attrs = {}    # XML attributes and child elements
             self.data = None    # child text data
         def __len__(self):
-            # treat single element as a list of 1
+            """treat single element as a list of 1"""
             return 1
         def __getitem__(self, key):
             if isinstance(key, basestring):
@@ -72,6 +77,7 @@ def xml2obj(src):
             return u'{%s}' % ', '.join([u'%s:%s' % (k,repr(v)) for k,v in items])
 
     class TreeBuilder(xml.sax.handler.ContentHandler):
+        """Custom Tree Builder"""
         def __init__(self):
             self.stack = []
             self.root = DataNode()
