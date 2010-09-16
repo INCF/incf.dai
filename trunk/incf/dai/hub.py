@@ -31,8 +31,8 @@ class HubProxy(object):
             version_string = "&version=%s" % version
             url += version_string
         url = url + '&request=' + service_id +'&'
-        qs = urllib.urlencode(kw)
-        url += qs
+        query_string = urllib.urlencode(kw)
+        url += query_string
         logger.info("Calling %s" % url)
         return Response(self.proxy.request(url, "GET"))
 
