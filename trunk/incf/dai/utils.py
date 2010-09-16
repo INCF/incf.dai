@@ -25,10 +25,10 @@ import re
 import xml.sax.handler
 
 
-non_id_char = re.compile('[^_0-9a-zA-Z]')
+NON_ID_CHAR = re.compile('[^_0-9a-zA-Z]')
 def _name_mangle(name):
     """Get rid of unwanted characters in keys/ids"""
-    return non_id_char.sub('_', name)
+    return NON_ID_CHAR.sub('_', name)
 
 
 class DataNode(object):
