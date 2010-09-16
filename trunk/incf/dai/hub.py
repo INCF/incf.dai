@@ -11,7 +11,7 @@ logger = logging.getLogger('incf.dai')
 class HubProxy(object):
     """ Generic proxy to an INCF DAI hub """
 
-    def __init__(self, base_url, decorate=False, offline=False):
+    def __init__(self, base_url, minimal=False, offline=False):
         self.base_url = base_url
         # no cache for the time being
         # self.proxy = httplib2.Http('.cache')
@@ -19,8 +19,8 @@ class HubProxy(object):
             self.proxy = LocalProxy()
         else:
             self.proxy = httplib2.Http()
-        if decorate:
-            self.add_capabilities()
+            if not minimal:
+                self.capabilities = self.get_capabilities()
 
     def __call__(self, service_id, version=None, **kw):
         """Generic call method invoking
@@ -49,13 +49,14 @@ class HubProxy(object):
     
     # some private helper methods
 
-    def add_capabilities(self):
-        """Populate the 'capabilities' attribute"""
+    def get_capabilities(self):
+        """Call 'GetCapabilities' and return the extracted method ids"""
         response =  self('GetCapabilities', output='xml')
         key_1 = 'wps_ProcessOfferings'
         key_2 = 'wps_Process'
-        self.capabilities = tuple([l['ows_Identifier']
-                                   for l in response[key_1][key_2]])
+        return tuple([l['ows_Identifier']
+                      for l in response[key_1][key_2]]
+                     )
     
 
 # helper class for offline testing
