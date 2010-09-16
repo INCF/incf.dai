@@ -1,4 +1,4 @@
-# Generic proxy to an INCF DAI hub
+"""Generic proxy to an INCF DAI hub"""
 
 import urllib
 import httplib2
@@ -20,7 +20,7 @@ class HubProxy(object):
         else:
             self.proxy = httplib2.Http()
         if decorate:
-            self._addCapabilities()
+            self.add_capabilities()
 
     def __call__(self, service_id, version=None, **kw):
         """Generic call method invoking
@@ -28,8 +28,8 @@ class HubProxy(object):
         where the <querystring> is constructed from the keyword arguments"""
         url = self.base_url
         if version is not None:
-            v = "&version=%s" % version
-            url += v
+            version_string = "&version=%s" % version
+            url += version_string
         url = url + '&request=' + service_id +'&'
         qs = urllib.urlencode(kw)
         url += qs
@@ -49,18 +49,22 @@ class HubProxy(object):
     
     # some private helper methods
 
-    def _addCapabilities(self):
-        r =  self('GetCapabilities', output='xml')
-        k1 = 'wps_ProcessOfferings'
-        k2 = 'wps_Process'
+    def add_capabilities(self):
+        """Populate the 'capabilities' attribute"""
+        response =  self('GetCapabilities', output='xml')
+        key_1 = 'wps_ProcessOfferings'
+        key_2 = 'wps_Process'
         self.capabilities = tuple([l['ows_Identifier']
-                                   for l in r[k1][k2]])
+                                   for l in response[key_1][key_2]])
     
 
 # helper class for offline testing
 
 class LocalProxy(object):
+    """Dummy proxy for offline testing"""
     def request(self, url, *args, **kw):
+        """Fake a request by printing the URL that would be called
+        and returning a minimal response tuple."""
         print "Calling", url
         return ("Dummy header", "<xml>Foo</xml>")
     
