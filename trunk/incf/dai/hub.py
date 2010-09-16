@@ -6,7 +6,25 @@ import logging
 
 from incf.dai.response import Response
 
-logger = logging.getLogger('incf.dai')
+# set up logging to file - straight from the Python docs
+LOG_FILENAME = "./incf.dai.log"
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                    datefmt='%Y-%m-%d %H:%M',
+                    filename=LOG_FILENAME,
+                    filemode='a')
+# define a Handler which writes INFO messages or higher to the sys.stderr
+console = logging.StreamHandler()
+console.setLevel(logging.INFO)
+# set a format which is simpler for console use
+formatter = logging.Formatter('%(name)-8s: %(levelname)-8s %(message)s')
+# tell the handler to use this format
+console.setFormatter(formatter)
+# add the handler to the root logger
+logging.getLogger('').addHandler(console)
+
+LOGGER = logging.getLogger('incf.dai')
+
 
 class HubProxy(object):
     """ Generic proxy to an INCF DAI hub """
@@ -33,7 +51,7 @@ class HubProxy(object):
         url = url + '&request=' + service_id +'&'
         query_string = urllib.urlencode(kw)
         url += query_string
-        logger.info("Calling %s" % url)
+        LOGGER.info("Calling %s" % url)
         return Response(self.proxy.request(url, "GET"))
 
     # Every hub is required to provide this
