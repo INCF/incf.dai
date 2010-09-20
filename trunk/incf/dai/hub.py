@@ -81,6 +81,7 @@ class HubProxy(object):
 
 
 # XXX FIXME this is wishful thinking - it doesn't work that way :-(
+# we can only do this on classes
 def add_method(inst, method_id):
     """helper function for adding methods to a hub instance at runtime"""
     method_id = str(method_id)     # potential cast from unicode to str
