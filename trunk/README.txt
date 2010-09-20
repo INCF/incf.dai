@@ -5,9 +5,10 @@ INCF Digital Atlasing Infrastructure
 This package provides a Python API to the Digital Brain Atlasing web
 services provided by the International Neuroinformatics Coordinating  
 Facility (INCF). To be useful and functional it requires a working
-internet connection at runtime. The specification of the core
-webservices within the INCF Digital Atlasing Infrastructure (incf.dai)
-are available from <url to specification goes here>. 
+internet connection at runtime. The details of the core webservices 
+within the INCF Digital Atlasing Infrastructure (incf.dai) are available 
+from the specification_.
+
 
 Discovering and Accessing Hubs
 ==============================
@@ -105,3 +106,4 @@ positional arguments: ('GET',)
 
 
 
+.. _specification: http://code.google.com/p/incf-dai/wiki/INCFProjectSpecification
