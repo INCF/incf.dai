@@ -39,6 +39,9 @@ class HubProxy(object):
             self.proxy = httplib2.Http()
             if not minimal:
                 self.capabilities = self.get_capabilities()
+                # dynamically generating associated methods
+                for id in self.capabilities:
+                    add_method(self, id)
 
     def __call__(self, service_id, version=None, **kw):
         """Generic call method invoking
@@ -75,7 +78,17 @@ class HubProxy(object):
         return tuple([l['ows_Identifier']
                       for l in response[key_1][key_2]]
                      )
-    
+
+# helper function for adding methods to a hub instance at runtime
+
+def add_method(inst, method_id):
+    method_id = str(method_id)     # potential cast from unicode to str
+    def localmethod(self):
+        return self(method_id, version=None, **kw)
+    localmethod.__doc__ = "docstring for %s still to come" % method_id
+    localmethod.__name__ = method_id
+    setattr(inst, localmethod.__name__, localmethod)
+
 
 # helper class for offline testing
 

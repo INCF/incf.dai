@@ -68,6 +68,11 @@ above as their main information returned is available anyway via
 >>> whs.capabilities
 (u'DescribeSRS', u'GetStructureNamesByPOI', u'ListSRSs')
 
+and all methods listed are available on the hub proxy right away
+
+>>> sorted(whs.__dict__.keys()) 
+['DescribeSRS', 'GetStructureNamesByPOI', 'ListSRSs', 'base_url', 'capabilities', 'proxy']
+
 
 Accessing Hubs not registered at INCF
 =====================================
