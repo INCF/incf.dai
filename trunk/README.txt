@@ -1,5 +1,6 @@
+====================================
 INCF Digital Atlasing Infrastructure
-======================
+====================================
 
 This package provides a Python API to the Digital Brain Atlasing web
 services provided by the International Neuroinformatics Coordinating  
@@ -7,6 +8,9 @@ Facility (INCF). To be useful and functional it requires a working
 internet connection at runtime. The specification of the core
 webservices within the INCF Digital Atlasing Infrastructure (incf.dai)
 are available from <url to specification goes here>. 
+
+Discovering and Accessing Hubs
+==============================
 
 In a nutshell the INCF DAI consistes of a network of so-called
 *hubs* providing whatever services the group managing the hub decided
@@ -65,6 +69,9 @@ above as their main information returned is available anyway via
 (u'DescribeSRS', u'GetStructureNamesByPOI', u'ListSRSs')
 
 
+Accessing Hubs not registered at INCF
+=====================================
+
 To connect to a hub not registered with INCF Central (e.g., a local
 hub under development) one can instanciate the proxy explicitly as in 
 (setting offline=True avoids ever calling the url)
@@ -74,12 +81,13 @@ hub under development) one can instanciate the proxy explicitly as in
 >>> myhub   # doctest: +ELLIPSIS
 <incf.dai.hub.HubProxy object at ...>
 
-The hub proxy provides a generic call method to be invoked as in 
+At the very least the generic call method to be invoked as in 
 
 >>> capabilities = myhub('GetCapabilities',output='xml')
 Requested URL: http://some.url?service=WPS&request=GetCapabilities&output=xml
 positional arguments: ('GET',)
 
+should always be available.
 The first argument here is a name of the function to be invoked at the
 hub but for convenience 'GetCapabilities' is also provided as a method
 on the hub proxy itself.
