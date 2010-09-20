@@ -58,6 +58,11 @@ Calling any of those methods returns a custom response object
 >>> response  # doctest: +ELLIPSIS
 <incf.dai.response.Response object at 0x...>
 
+Usually, there is no need to call any of the two methods mentioned 
+above as their main information returned is available anyway via
+
+>>> whs.capabilities
+(u'DescribeSRS', u'GetStructureNamesByPOI', u'ListSRSs')
 
 
 To connect to a hub not registered with INCF Central (e.g., a local
