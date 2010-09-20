@@ -30,6 +30,13 @@ specific for a particular hub by calling
 >>> whs # doctest: +ELLIPSIS
 <incf.dai.hub.HubProxy object at ...>
 
+If you call for an unknow hub (or make a typo) you will get a KeyError
+
+>>> foo = get_hub_by_name('foo')
+Traceback (most recent call last):
+KeyError
+
+
 For introspection the URL to the service controller for this hub is
 available as 
 >>> whs.base_url
