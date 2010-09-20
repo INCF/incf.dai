@@ -54,6 +54,12 @@ Calling any of those methods returns a custom response object
 >>> response  # doctest: +ELLIPSIS
 <incf.dai.response.Response object at 0x...>
 
+>>> response = whs.DescribeProcess()
+>>> response  # doctest: +ELLIPSIS
+<incf.dai.response.Response object at 0x...>
+
+
+
 To connect to a hub not registered with INCF Central (e.g., a local
 hub under development) one can instanciate the proxy explicitly as in 
 (setting offline=True avoids ever calling the url)
