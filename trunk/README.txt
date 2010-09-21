@@ -74,6 +74,25 @@ and all methods listed are available on the hub proxy right away
 >>> sorted(whs.__dict__.keys()) 
 ['DescribeSRS', 'GetStructureNamesByPOI', 'ListSRSs', 'base_url', 'capabilities', 'proxy']
 
+like in 
+
+>>> response = whs.ListSRSs()
+>>> sorted(response.keys())
+[u'Orientations', u'QueryInfo', u'SRSList', u'xmlns', u'xmlns_gml']
+
+>>> response['SRSList']  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+{SRS:[{Area:{structureName:u'whole brain'}, 
+       Author:{authorCode:u'WHS', dateSubmitted:u'2010-09-21-07:00'}, 
+       DateCreated:u'2010-09-21-07:00', 
+       DateUpdated:u'2010-09-21-07:00', ...
+
+For further convenience, the response object also supports attribute-like 
+access to the data as in
+
+>>> response.QueryInfo
+{QueryUrl:u'http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS&version=1.0.0&request=Execute&Identifier=ListSRSs'}
+
+
 
 Accessing Hubs not registered at INCF
 =====================================
