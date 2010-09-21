@@ -89,5 +89,6 @@ class LocalProxy(object):
             print "positional arguments:", args
         if kw:
             print "keyword arguments:", kw
-        return ("Dummy header", "<xml>Foo</xml>")
+        return ({'content-type':'text/plain'}, 
+                "Some plain text")
     

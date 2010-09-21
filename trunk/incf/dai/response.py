@@ -10,14 +10,20 @@ class Response(object):
     def __init__(self, response):
         self.headers = response[0]
         self.content = response[1]
-        self.data = xml2obj(response[1])
+        if 'application/xml' in self.headers['content-type']:
+            self.data = xml2obj(response[1])
+        else:
+            self.data = None
+
 
     def __getitem__(self, key):
         return self.data[key]
     
+
     def __str__(self):
         doc = xml.dom.minidom.parseString(self.content)
         return doc.toprettyxml()
+
 
     def keys(self):
         """keys of the parsed data - if available"""
