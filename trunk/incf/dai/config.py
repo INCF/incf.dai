@@ -18,13 +18,13 @@ logging.basicConfig(level=logging.DEBUG,
                     filename=LOG_FILENAME,
                     filemode='a')
 # define a Handler which writes INFO messages or higher to the sys.stderr
-console = logging.StreamHandler()
-console.setLevel(logging.INFO)
+CONSOLE = logging.StreamHandler()
+CONSOLE.setLevel(logging.INFO)
 # set a format which is simpler for console use
-formatter = logging.Formatter('%(name)-8s: %(levelname)-8s %(message)s')
+FORMATTER = logging.Formatter('%(name)-8s: %(levelname)-8s %(message)s')
 # tell the handler to use this format
-console.setFormatter(formatter)
+CONSOLE.setFormatter(FORMATTER)
 # add the handler to the root logger
-logging.getLogger('').addHandler(console)
+logging.getLogger('').addHandler(CONSOLE)
 
 LOGGER = logging.getLogger('incf.dai')
