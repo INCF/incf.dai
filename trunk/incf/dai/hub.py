@@ -82,14 +82,14 @@ class HubProxy(object):
 
 # XXX FIXME this is wishful thinking - it doesn't work that way :-(
 # we can only do this on classes
-def add_method(inst, method_id):
+def add_method(inst, service_id):
     """helper function for adding methods to a hub instance at runtime"""
-    method_id = str(method_id)     # potential cast from unicode to str
+    service_id = str(service_id)     # potential cast from unicode to str
     def localmethod(self):
-        """To be overwritten below"""
-        return self(method_id, version=None, **kw)
-    localmethod.__doc__ = "docstring for %s still to come" % method_id
-    localmethod.__name__ = method_id
+        """Doc string - to be overwritten below"""
+        return HubProxy.__call__(service_id, version=None, **kw)
+    localmethod.__doc__ = "docstring for %s still to come" % service_id
+    localmethod.__name__ = service_id
     setattr(inst, localmethod.__name__, localmethod)
 
 
