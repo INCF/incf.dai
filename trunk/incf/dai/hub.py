@@ -85,9 +85,9 @@ class HubProxy(object):
 def add_method(inst, service_id):
     """helper function for adding methods to a hub instance at runtime"""
     service_id = str(service_id)     # potential cast from unicode to str
-    def localmethod(self):
+    def localmethod():
         """Doc string - to be overwritten below"""
-        return HubProxy.__call__(service_id, version=None, **kw)
+        return HubProxy.__call__(inst, service_id, version=None)
     localmethod.__doc__ = "docstring for %s still to come" % service_id
     localmethod.__name__ = service_id
     setattr(inst, localmethod.__name__, localmethod)
