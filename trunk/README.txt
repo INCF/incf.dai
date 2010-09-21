@@ -94,12 +94,13 @@ access to the data as in
 
 Omitting required arguments raises an 'ApplicationError'
 
->>> response = whs.DescribeSRS()  # doctest: +ELLIPSIS
+>>> response = whs.DescribeSRS()  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 Traceback (most recent call last):
 ...
 ApplicationError: 
 Code: NotApplicableCode
 Text: Unrecognized URI.
+URL:  http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS&version=1.0.0&request=Execute&Identifier=DescribeSRS
 
 
 

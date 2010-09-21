@@ -7,9 +7,10 @@ from incf.dai.utils import xml2obj
 class Response(object):
     """Custom response object including the parsed response in self.data"""
 
-    def __init__(self, response):
+    def __init__(self, response, url):
         self.headers = response[0]
         self.content = response[1]
+        self.url = url
         if 'application/xml' in self.headers['content-type']:
             self.data = xml2obj(response[1])
             self.__dict__.update(self.data)
@@ -56,14 +57,20 @@ class Response(object):
     def handle_exception(self):
         """Raise custom exception"""
         raise ApplicationError(self.ows_Exception['exceptionCode'],
-                               self.ows_Exception['ows_ExceptionText'])
+                               self.ows_Exception['ows_ExceptionText'],
+                               self.url,
+                               )
 
 
 
 class ApplicationError(Exception):
-    def __init__(self, code, text):
+    def __init__(self, code, text, url):
         self.code = code
         self.text = text
+        self.url = url
     def __str__(self):
-        return "\nCode: %s\nText: %s" % (self.code, self.text)
+        return "\nCode: %s\nText: %s\nURL:  %s" % (self.code, 
+                                                   self.text,
+                                                   self.url,
+                                                   )
 

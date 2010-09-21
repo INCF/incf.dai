@@ -36,7 +36,7 @@ class HubProxy(object):
         query_string = urllib.urlencode(kw)
         url += query_string
         LOGGER.info("Calling %s" % url)
-        return Response(self.proxy.request(url, "GET"))
+        return Response(self.proxy.request(url, "GET"), url)
 
     # Every hub is required to provide this
 
