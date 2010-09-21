@@ -12,12 +12,20 @@ class Response(object):
         self.content = response[1]
         if 'application/xml' in self.headers['content-type']:
             self.data = xml2obj(response[1])
+            self.__dict__.update(self.data)
         else:
             self.data = None
 
 
     def __getitem__(self, key):
         return self.data[key]
+
+
+    def __getattr__(self, attr):
+        if attr in self.data.keys():
+            return self.data[attr]
+        else:
+            raise AttributeError
     
 
     def __str__(self):
