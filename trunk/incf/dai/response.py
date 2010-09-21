@@ -15,6 +15,7 @@ class Response(object):
             self.__dict__.update(self.data)
         else:
             self.data = None
+        self.process_exceptions()
 
 
     def __getitem__(self, key):
@@ -38,3 +39,31 @@ class Response(object):
         if self.data is None:
             return []
         return self.data.keys()
+
+
+    def content_type(self):
+        """Return the content type from the header"""
+        return self.headers['content-type']
+
+
+    def process_exceptions(self):
+        """Check for 4?? response codes raise by the service"""
+        status = self.headers['status']
+        if status.startswith('4'):
+            return self.handle_exception()
+        return None
+
+    def handle_exception(self):
+        """Raise custom exception"""
+        raise ApplicationError(self.ows_Exception['exceptionCode'],
+                               self.ows_Exception['ows_ExceptionText'])
+
+
+
+class ApplicationError(Exception):
+    def __init__(self, code, text):
+        self.code = code
+        self.text = text
+    def __str__(self):
+        return "\nCode: %s\nText: %s" % (self.code, self.text)
+

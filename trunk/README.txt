@@ -92,6 +92,16 @@ access to the data as in
 >>> response.QueryInfo
 {QueryUrl:u'http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS&version=1.0.0&request=Execute&Identifier=ListSRSs'}
 
+Omitting required arguments raises an 'ApplicationError'
+
+>>> response = whs.DescribeSRS()  # doctest: +ELLIPSIS
+Traceback (most recent call last):
+...
+ApplicationError: 
+Code: NotApplicableCode
+Text: Unrecognized URI.
+
+
 
 
 Accessing Hubs not registered at INCF

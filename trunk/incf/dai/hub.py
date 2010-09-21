@@ -89,6 +89,8 @@ class LocalProxy(object):
             print "positional arguments:", args
         if kw:
             print "keyword arguments:", kw
-        return ({'content-type':'text/plain'}, 
+        return ({'content-type':'text/plain',
+                 'status':'200',
+                 }, 
                 "Some plain text")
     
