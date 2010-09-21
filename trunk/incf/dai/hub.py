@@ -86,7 +86,11 @@ def add_method(inst, service_id):
     service_id = str(service_id)     # potential cast from unicode to str
     def localmethod():
         """Doc string - to be overwritten below"""
-        return HubProxy.__call__(inst, service_id, version=None)
+        return HubProxy.__call__(inst, 
+                                 'Execute', 
+                                 Identifier=service_id, 
+                                 version="1.0.0",
+                                 )
     localmethod.__doc__ = "docstring for %s still to come" % service_id
     localmethod.__name__ = service_id
     setattr(inst, localmethod.__name__, localmethod)
