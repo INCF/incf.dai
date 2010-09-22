@@ -94,7 +94,7 @@ access to the data as in
 
 Omitting required arguments raises an 'ApplicationError'
 
->>> response = whs.DescribeSRS()  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+>>> response = whs.DescribeSRS(srsName="INCF:0001")  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 Traceback (most recent call last):
 ...
 ApplicationError: 

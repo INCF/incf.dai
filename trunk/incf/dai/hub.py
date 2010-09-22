@@ -22,10 +22,14 @@ class HubProxy(object):
                 self.capabilities = self.get_capabilities()
                 # dynamically generating associated methods
                 for capability in self.capabilities:
-                    add_method(self, capability)
+                    if capability == "DescribeSRS":
+                        add_method(self, capability, srsName="")
+                    else:
+                        add_method(self, capability)
 
     def __call__(self, service_id, version=None, **kw):
-        """Generic call method invoking
+        """XXX: needs updating
+        Generic call method invoking
         <base_url>&version=<version>&request=<service_id><querystring>
         where the <querystring> is constructed from the keyword arguments"""
         url = self.base_url
@@ -33,10 +37,16 @@ class HubProxy(object):
             version_string = "&version=%s" % version
             url += version_string
         url = url + '&request=' + service_id +'&'
-        query_string = urllib.urlencode(kw)
+        query_string = self.encode_datainputs(**kw)
         url += query_string
         LOGGER.info("Calling %s" % url)
         return Response(self.proxy.request(url, "GET"), url)
+
+    def encode_datainputs(self, **kw):
+        items = []
+        for key, value in kw.items():
+            items.append('='.join([key, value]))
+        return "DataInputs=" + "@".join(items)
 
     # Every hub is required to provide this
 
@@ -62,17 +72,18 @@ class HubProxy(object):
 
 
 # XXX FIXME: no arguments supported yet
-def add_method(inst, service_id):
+def add_method(inst, service_id, **kw):
     """helper function for adding methods to a hub instance at runtime"""
     service_id = str(service_id)     # potential cast from unicode to str
-    def localmethod():
+    def localmethod(**kw):
         """Doc string - to be overwritten below"""
         return HubProxy.__call__(inst, 
                                  'Execute', 
                                  Identifier=service_id, 
                                  version="1.0.0",
+                                 **kw
                                  )
-    localmethod.__doc__ = "docstring for %s still to come" % service_id
+    localmethod.__doc__ = "Supported arguments: %s" % ", ".join(kw.keys())
     localmethod.__name__ = service_id
     setattr(inst, localmethod.__name__, localmethod)
 
