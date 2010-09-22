@@ -82,9 +82,9 @@ like in
 
 >>> response['SRSList']  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 {SRS:[{Area:{structureName:u'whole brain'}, 
-       Author:{authorCode:u'WHS', dateSubmitted:u'2010-09-21-07:00'}, 
-       DateCreated:u'2010-09-21-07:00', 
-       DateUpdated:u'2010-09-21-07:00', ...
+       Author:{authorCode:u'WHS', dateSubmitted:u'2010-09-22-07:00'}, 
+       DateCreated:u'2010-09-22-07:00', 
+       DateUpdated:u'2010-09-22-07:00', ...
 
 For further convenience, the response object also supports attribute-like 
 access to the data as in
