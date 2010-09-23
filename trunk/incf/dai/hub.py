@@ -59,6 +59,7 @@ class HubProxy(object):
         url.append(format)
 
         if kw:
+            print kw
             url.append(self.encode_datainputs(**kw))
 
         url = "".join(url)
@@ -68,11 +69,7 @@ class HubProxy(object):
     def encode_datainputs(self, **kw):
         items = []
         for key, value in kw.items():
-            items.append('='.join([urllib.urlencode(key), 
-                                   urllib.urlencode(value),
-                                   ]
-                                  )
-                         )
+            items.append('='.join([key, value]))
         return "&DataInputs=" + "@".join(items)
 
     # Every hub is required to provide this
@@ -96,7 +93,7 @@ class HubProxy(object):
 
     def get_capabilities(self):
         """Call 'GetCapabilities' and return the extracted method ids"""
-        response =  self('GetCapabilities', output='xml')
+        response = self.GetCapabilities()
         key_1 = 'wps_ProcessOfferings'
         key_2 = 'wps_Process'
         return tuple([l['ows_Identifier']
@@ -111,9 +108,9 @@ def add_method(inst, service_id, **kw):
     def localmethod(**kw):
         """Doc string - to be overwritten below"""
         return HubProxy.__call__(inst, 
-                                 'Execute', 
-                                 Identifier=service_id, 
                                  version="1.0.0",
+                                 request='Execute', 
+                                 identifier=service_id, 
                                  **kw
                                  )
     localmethod.__doc__ = "Supported arguments: %s" % ", ".join(kw.keys())

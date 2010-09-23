@@ -82,25 +82,23 @@ like in
 
 >>> response['SRSList']  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 {SRS:[{Area:{structureName:u'whole brain'}, 
-       Author:{authorCode:u'WHS', dateSubmitted:u'2010-09-22-07:00'}, 
-       DateCreated:u'2010-09-22-07:00', 
-       DateUpdated:u'2010-09-22-07:00', ...
+       Author:{authorCode:u'WHS', ...
 
 For further convenience, the response object also supports attribute-like 
 access to the data as in
 
 >>> response.QueryInfo
-{QueryUrl:u'http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS&version=1.0.0&request=Execute&Identifier=ListSRSs'}
+{QueryUrl:u'http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS&version=1.0.0&request=Execute&Identifier=ListSRSs&ResponseForm=xml'}
 
 Omitting required arguments raises an 'ApplicationError'
 
->>> response = whs.DescribeSRS(srsName="INCF:0001")  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+>>> response = whs.DescribeSRS()  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 Traceback (most recent call last):
 ...
 ApplicationError: 
 Code: NotApplicableCode
 Text: Unrecognized URI.
-URL:  http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS&version=1.0.0&request=Execute&Identifier=DescribeSRS
+URL:  http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS&version=1.0.0&request=Execute&Identifier=DescribeSRS&ResponseForm=xml
 
 
 
@@ -119,17 +117,19 @@ hub under development) one can instanciate the proxy explicitly as in
 
 At the very least the generic call method to be invoked as in 
 
->>> capabilities = myhub('GetCapabilities',output='xml')
-Requested URL: http://some.url?service=WPS&request=GetCapabilities&output=xml
+>>> capabilities = myhub(version=None, request='GetCapabilities')
+Requested URL: http://some.url?service=WPS&request=GetCapabilities&ResponseForm=xml
 positional arguments: ('GET',)
 
 should always be available.
-The first argument here is a name of the function to be invoked at the
-hub but for convenience 'GetCapabilities' is also provided as a method
+The first argument here is to override the version specification which
+is not supported for 'GetCapabilities' calls. Second is the name of the 
+request to be invoked at the hub.
+For convenience 'GetCapabilities' is also provided as a method
 on the hub proxy itself.
 
 >>> myhub.GetCapabilities()  # doctest: +ELLIPSIS
-Requested URL: http://some.url?service=WPS&request=GetCapabilities&output=xml
+Requested URL: http://some.url?service=WPS&request=GetCapabilities&ResponseForm=xml
 positional arguments: ('GET',)
 <incf.dai.response.Response object at ...>
 
