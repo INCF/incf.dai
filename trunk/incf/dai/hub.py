@@ -27,36 +27,69 @@ class HubProxy(object):
                     else:
                         add_method(self, capability)
 
-    def __call__(self, service_id, version=None, **kw):
-        """XXX: needs updating
-        Generic call method invoking
-        <base_url>&version=<version>&request=<service_id><querystring>
-        where the <querystring> is constructed from the keyword arguments"""
-        url = self.base_url
+    def __call__(self, 
+                 version="1.0.0",
+                 request="Execute",
+                 identifier=None,
+                 format="xml",
+                 **kw
+                 ):
+        """Generic call method invoking
+
+        <base_url>&version=<version>&request=<request>&Identifier=<identifier>
+        &ResponseForm={format}&DataInputs={EncodedInputs}
+
+        where the {EncodedInputs} are constructed from the keyword arguments.
+        version defaults to '1.0.0' and can be omitted by passing None.
+        """
+        url = [self.base_url]
+
         if version is not None:
-            version_string = "&version=%s" % version
-            url += version_string
-        url = url + '&request=' + service_id +'&'
-        query_string = self.encode_datainputs(**kw)
-        url += query_string
+            version = "&version=%s" % version
+            url.append(version)
+
+        request = '&request=%s' % request
+        url.append(request)
+
+        if identifier is not None:
+            identifier = "&Identifier=%s" % identifier
+            url.append(identifier)
+
+        format = "&ResponseForm=%s" % format
+        url.append(format)
+
+        if kw:
+            url.append(self.encode_datainputs(**kw))
+
+        url = "".join(url)
         LOGGER.info("Calling %s" % url)
         return Response(self.proxy.request(url, "GET"), url)
 
     def encode_datainputs(self, **kw):
         items = []
         for key, value in kw.items():
-            items.append('='.join([key, value]))
-        return "DataInputs=" + "@".join(items)
+            items.append('='.join([urllib.urlencode(key), 
+                                   urllib.urlencode(value),
+                                   ]
+                                  )
+                         )
+        return "&DataInputs=" + "@".join(items)
 
     # Every hub is required to provide this
 
-    def GetCapabilities(self, output='xml'):
+    def GetCapabilities(self):
         """A list of all services provided by the hub"""
-        return self('GetCapabilities', output=output)
+        return self(version=None, request='GetCapabilities')
 
-    def DescribeProcess(self, version="1.0.0", output='xml'):
-        """Detailed description of services at the hub"""
-        return self('DescribeProcess', version=version, output=output)
+    def DescribeProcess(self, version="1.0.0", identifier=None):
+        """Detailed description of services at the hub.
+        'identifier' specifies the service to be described.
+        if None (default) all services are described.
+        """
+        return self(version=version, 
+                    request='DescribeProcess', 
+                    identifier=identifier,
+                    )
 
     
     # some private helper methods
