@@ -67,12 +67,13 @@ Usually, there is no need to call any of the two methods mentioned
 above as their main information returned is available anyway via
 
 >>> whs.capabilities
-(u'DescribeSRS', u'GetStructureNamesByPOI', u'ListSRSs')
+[u'DescribeSRS', u'GetStructureNamesByPOI', u'ListSRSs']
 
 and all methods listed are available on the hub proxy right away
 
->>> sorted(whs.__dict__.keys()) 
-['DescribeSRS', 'GetStructureNamesByPOI', 'ListSRSs', 'base_url', 'capabilities', 'proxy']
+>>> sorted(whs.__dict__.keys())   # doctest: +NORMALIZE_WHITESPACE
+['DescribeSRS', 'GetStructureNamesByPOI', 'ListSRSs', 'base_url', 
+'capabilities', 'process_descriptions', 'proxy']
 
 like in 
 

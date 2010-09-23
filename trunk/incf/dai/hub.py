@@ -19,7 +19,8 @@ class HubProxy(object):
         else:
             self.proxy = httplib2.Http()
             if not minimal:
-                self.capabilities = self.get_capabilities()
+                self.process_descriptions = self.get_process_descriptions()
+                self.capabilities = [e.ows_Identifier for e in self.process_descriptions]
                 # dynamically generating associated methods
                 for capability in self.capabilities:
                     if capability == "DescribeSRS":
@@ -83,16 +84,12 @@ class HubProxy(object):
                     )
 
     
-    # some private helper methods
+    # some helper methods
 
-    def get_capabilities(self):
-        """Call 'GetCapabilities' and return the extracted method ids"""
-        response = self.GetCapabilities()
-        key_1 = 'wps_ProcessOfferings'
-        key_2 = 'wps_Process'
-        return tuple([l['ows_Identifier']
-                      for l in response[key_1][key_2]]
-                     )
+    def get_process_descriptions(self):
+        """Call 'DescribeProcess' and return the parsed xml"""
+        response = self.DescribeProcess()
+        return response.data.ProcessDescription
 
 # helper functions
 
