@@ -1,7 +1,7 @@
 """Generic proxy to an INCF DAI hub"""
 
-import urllib
 import httplib2
+import urllib
 
 from incf.dai.config import LOGGER
 from incf.dai.response import Response
@@ -66,12 +66,6 @@ class HubProxy(object):
         LOGGER.info("Calling %s" % url)
         return Response(self.proxy.request(url, "GET"), url)
 
-    def encode_datainputs(self, **kw):
-        items = []
-        for key, value in kw.items():
-            items.append('='.join([key, value]))
-        return "&DataInputs=" + "@".join(items)
-
     # Every hub is required to provide this
 
     def GetCapabilities(self):
@@ -100,8 +94,17 @@ class HubProxy(object):
                       for l in response[key_1][key_2]]
                      )
 
+# helper functions
 
-# XXX FIXME: no arguments supported yet
+def encode_datainputs(**kw):
+    """Construct the 'DataInputs' query string from the keyword arguments"""
+    encode = urllib.urlencode
+    items = []
+    for key, value in kw.items():
+        items.append('='.join([key, encode(value)]))
+        return "&DataInputs=" + "@".join(items)
+
+
 def add_method(inst, service_id, **kw):
     """helper function for adding methods to a hub instance at runtime"""
     service_id = str(service_id)     # potential cast from unicode to str
