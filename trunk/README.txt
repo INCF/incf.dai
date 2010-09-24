@@ -210,15 +210,9 @@ may prefer this approach.
 Logging
 =======
 
-Per default, all service calls are logged at 'INFO' level to 
-a custom log file in the current working directory
-
->>> import os
->>> 'incf.dai.log' in os.listdir('.')
-True
-
-including a time stap, the package name, teh log level and the
-URL called.
+Per default, all service calls are logged at 'INFO' level to a custom log 
+file in the current working directory including a time stamp, the package 
+name, the log level and the URL called.
 
 
 Accessing Hubs not registered at INCF
