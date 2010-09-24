@@ -101,11 +101,17 @@ Code: NotApplicableCode
 Text: Unrecognized URI.
 URL:  http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS&version=1.0.0&request=Execute&Identifier=DescribeSRS&ResponseForm=xml
 
-whereas providing the required argument (srsName here) results in
+whereas providing required argument results in
 
-# commented out because the service is not up yet???
-#>>> response = whs.DescribeSRS(srsName="")  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-#>>> response.keys()
+>>> response = whs.GetStructureNamesByPOI(format=None, srsName="Mouse_paxinos_1.0", x='1', y='4.3', z='1.78')  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+>>> response.keys()
+[u'QueryInfo', u'xmlns_xsi', u'xmlns', u'StructureTerms']
+>>> response.StructureTerms.StructureTerm.Code.data
+u'Bckgrnd'
+
+The 'format=None' here works around issue
+http://code.google.com/p/incf-dai/issues/detail?id=14
+
 
 
 Accessing Hubs not registered at INCF

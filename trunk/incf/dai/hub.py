@@ -56,8 +56,9 @@ class HubProxy(object):
             identifier = "&Identifier=%s" % identifier
             url.append(identifier)
 
-        format = "&ResponseForm=%s" % format
-        url.append(format)
+        if format is not None: 
+            format = "&ResponseForm=%s" % format
+            url.append(format)
 
         if kw:
             url.append(encode_datainputs(**kw))
@@ -98,7 +99,7 @@ def encode_datainputs(**kw):
     data = []
     for key, value in kw.items():
         data.append('='.join([key, value]))
-    return "&DataInputs=" + "@".join(data)
+    return "&DataInputs=" + ";".join(data)
 
 
 def add_method(inst, service_id, signatures):
