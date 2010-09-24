@@ -114,9 +114,10 @@ def add_method(inst, service_id, signatures):
                                  **kwargs
                                  )
     if kwargs:
-        localmethod.__doc__ = "Supported arguments: %s" % ", ".join(kwargs.keys())
+        args = ", ".join(kwargs.keys())
+        localmethod.__doc__ = "Supported arguments: %s" % args
     else:
-        localmethod.__doc__ = "This method takes no argumants"
+        localmethod.__doc__ = "This method takes no arguments"
     localmethod.__name__ = service_id
     setattr(inst, localmethod.__name__, localmethod)
 

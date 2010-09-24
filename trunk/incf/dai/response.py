@@ -65,10 +65,14 @@ class Response(object):
 
 class ApplicationError(Exception):
     """Custom error to be raised when a hub service returns an error message"""
+
     def __init__(self, code, text, url):
         self.code = code
         self.text = text
         self.url = url
+        super(ApplicationError, self).__init__()
+
+        
     def __str__(self):
         return "\nCode: %s\nText: %s\nURL:  %s" % (self.code, 
                                                    self.text,
