@@ -21,10 +21,12 @@ class HubProxy(object):
             if not minimal:
                 self.process_descriptions = self.get_process_descriptions()
                 self.capabilities = [e.ows_Identifier for e in self.process_descriptions]
+                signatures = extract_signatures(self)
                 # dynamically generating associated methods
                 for capability in self.capabilities:
-                    if capability == "DescribeSRS":
-                        add_method(self, capability, srsName="")
+                    if capability in signatures.keys():
+                        kw = signatures[capability]
+                        add_method(self, capability, **kw)
                     else:
                         add_method(self, capability)
 
@@ -116,6 +118,27 @@ def add_method(inst, service_id, **kw):
     localmethod.__doc__ = "Supported arguments: %s" % ", ".join(kw.keys())
     localmethod.__name__ = service_id
     setattr(inst, localmethod.__name__, localmethod)
+
+
+def extract_signatures(hub):
+    """Given the process descriptions infer the method signatures"""
+    descriptions = hub.process_descriptions
+    signatures = {}
+    for description in descriptions:
+        service = str(description.ows_Identifier)
+        if description.DataInputs is None:
+            continue
+        if type(description.DataInputs.Input) is not type([]):   
+            # happens if only one argument is supported
+            description.DataInputs.Input = [description.DataInputs.Input]
+        args = [str(e.ows_Identifier) for e in description.DataInputs.Input]
+        kw = {}
+        default = ""     # Can we infer defaults from the process descriptions?
+        for arg in args:
+            kw[arg] = default
+        signatures[service] = kw
+
+    return signatures
 
 
 # helper class for offline testing
