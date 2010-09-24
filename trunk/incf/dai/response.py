@@ -31,8 +31,10 @@ class Response(object):
     
 
     def __str__(self):
-        doc = xml.dom.minidom.parseString(self.content)
-        return doc.toprettyxml()
+        if 'application/xml' in self.content_type:
+            doc = xml.dom.minidom.parseString(self.content)
+            return doc.toprettyxml(indent='', newl='')
+        return self.content
 
 
     def keys(self):

@@ -136,6 +136,13 @@ The source of the returned response page is available as
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n  
 <QueryInfo>\n ...
 
+which is probably more readable when printed (for this doc test
+calling 'print response' is avoided but in an interactive session 
+it should work just fine)
+
+>>> str(response)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+'<?xml version="1.0" ?><StructureTermsResponse  ...
+
 If the content type is XML there will also be a 'data' attribute
 holding the parsed response 
 
