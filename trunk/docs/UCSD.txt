@@ -1,0 +1,46 @@
+========
+UCSD Hub
+========
+
+Comprehensive doctest for the INCF DAI hub provided by UCSD
+
+>>> from incf.dai.utils import get_hub_by_name
+>>> ucsd = get_hub_by_name('ucsd')
+>>> sorted(ucsd.capabilities)  # doctest: +NORMALIZE_WHITESPACE
+[u'DescribeSRS',
+ u'Get2DImagesByPOI',
+ u'GetCellsByPOI',
+ u'GetCellsByURI',
+ u'GetStructureNamesByPOI',
+ u'GetTransformationChain',
+ u'Images2DByURI',
+ u'ListSRSs',
+ u'ListTransformations',
+ u'Retrieve2DImage',
+ u'TransformPOI']
+
+
+Checking ``ListSRSs``
+
+>>> r = ucsd.ListSRSs()
+>>> r.keys()
+[u'QueryInfo', u'xmlns_gml', u'xmlns', u'Orientations', u'SRSList']
+>>> r.SRSList.SRS.Name.data
+u'Mouse_Paxinos_1.0'
+
+
+Checking ``DescribeSRS``
+
+(Seems like this is not implemented yet - or I have not yet figured 
+out how to call it.)
+
+Checking ``ListTransformations``
+
+>>> r = ucsd.ListTransformations(format=None, inputSrsName='Mouse_Paxinos_1.0', outputSrsName='Mouse_ABAreference_1.0', filter='Cerebellum')
+>>> [t.code for t in r.TransformationList.CoordinateTransformation] # doctest: +NORMALIZE_WHITESPACE
+[u'Mouse_Paxinos_1.0_To_Mouse_WHS_0.9',
+ u'Mouse_WHS_0.9_To_Mouse_AGEA_1.0',
+ u'Mouse_AGEA_1.0_To_Mouse_ABAvoxel_1.0',
+ u'Mouse_ABAvoxel_1.0_To_Mouse_ABAreference_1.0']
+
+

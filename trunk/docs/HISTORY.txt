@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.4dev (unreleased)
+0.6dev (unreleased)
 -------------------
 
 - Initial release
