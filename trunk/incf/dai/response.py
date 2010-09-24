@@ -11,7 +11,7 @@ class Response(object):
         self.headers = response[0]
         self.content = response[1]
         self.url = url
-        if 'application/xml' in self.headers['content-type']:
+        if 'application/xml' in self.content_type:
             self.data = xml2obj(response[1])
             self.__dict__.update(self.data)
         else:

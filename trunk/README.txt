@@ -117,15 +117,9 @@ The Response in detail
 The custom response object returned from service calls here provides
 a variety of useful information like the HTTP response headers
 
->>> response.headers # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-{'accept-ranges': 'bytes',
- 'content-length': '1639',
- 'content-location': 'http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS&version=1.0.0&request=Execute&Identifier=GetStructureNamesByPOI&DataInputs=srsName=Mouse_paxinos_1.0;y=4.3;z=1.78;x=1',
- 'content-type': 'application/xml;charset=ISO-8859-1',
- 'date': ...
- 'server': 'Apache-Coyote/1.1, Noelios-Restlet-Engine/1.1..1',
- 'status': '200',
- 'vary': 'Accept-Charset, Accept-Encoding, Accept-Language, Accept'}
+>>> sorted(response.headers.keys())  # doctest: +NORMALIZE_WHITESPACE
+['accept-ranges', 'content-length', 'content-location', 
+ 'content-type', 'date', 'server', 'status', 'vary']
 
 and for convenience there is a short-cut to the content type
 
@@ -134,6 +128,53 @@ and for convenience there is a short-cut to the content type
 
 (Raphael notes: I think this should be utf-8 though; 
 see http://code.google.com/p/incf-dai/issues/detail?id=12)
+
+The source of the returned response page is available as
+
+>>> response.content # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+'<StructureTermsResponse xmlns="http://www.incf.org/WaxML/" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n  
+<QueryInfo>\n ...
+
+If the content type is XML there will also be a 'data' attribute
+holding the parsed response 
+
+>>> type(response.data)
+<class 'incf.dai.utils.DataNode'>
+
+which acts like a nested dictionary 
+
+>>> response.data.keys()
+[u'QueryInfo', u'xmlns_xsi', u'xmlns', u'StructureTerms']
+
+>>> response.data['StructureTerms']  # doctest: +NORMALIZE_WHITESPACE
+{StructureTerm:{Code:{codeSpace:u'Mouse_paxinos_1.0', 
+isDefault:u'true', data:u'Bckgrnd'}, Description:u'Term - Bckgrnd 
+derived from WHS hub based on the supplied POI.', Name:''}}
+
+but also supports attribute-like access (as long as the keys don't
+contain characters that make them unsuited as attribute names - in
+those cases only subscription access works)
+
+>>> response.data.xmlns
+u'http://www.incf.org/WaxML/'
+
+Again for convenience, the 'data' attribute can be bypassed
+as the 'data' content is "lifted" to the response object itself
+
+>>> response.data.keys() == response.keys()
+True
+
+and
+
+>>> response.xmlns_xsi
+u'http://www.w3.org/2001/XMLSchema-instance'
+
+Digging deeper into the response data requires knowledge of
+the response schema which is available from http://incf.org/WaxML
+or introspection of the content of the 'response.data' attribute.
+
+
 
 
 
