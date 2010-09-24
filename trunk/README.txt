@@ -183,11 +183,29 @@ or introspection of the content of the 'response.data' attribute.
 
 
 
-
-
 Improving Performance
 =====================
 
+Accessing a hub by calling 'get_hub_by_name' as presented above 
+triggers calling 'DescribeProcess' on hub proxy initialization to 
+infer the hubs capabilities and to dynamically create methods making 
+those capabilities readily available on the hub proxy. 
+Depending on context and intended usage you may want to avoid that 
+overhead and rather prefer a "naked" hub proxy as in
+
+>>> whs_minimal = get_hub_by_name('whs', minimal=True)
+
+This avoids calling 'DescribeProcess' on initialization but in
+return all you are left with is the generic call method that
+requires you to pass all arguments needed to construct the 
+proper WPS request
+
+>>> response = whs_minimal(version='1.0.0', request='Execute', identifier='ListSRSs')
+>>> sorted(response.keys())
+[u'Orientations', u'QueryInfo', u'SRSList', u'xmlns', u'xmlns_gml']
+
+Once you know what you need to call from your own code you
+may prefer this approach.
 
 
 Accessing Hubs not registered at INCF
