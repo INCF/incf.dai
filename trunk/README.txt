@@ -18,16 +18,14 @@ In a nutshell the INCF DAI consistes of a network of so-called
 to share. To discover available hubs there is a utility function
 
 >>> from incf.dai.utils import list_hub_names
->>> hub_names = list_hub_names()
->>> hub_names.sort()
->>> hub_names
+>>> sorted(list_hub_names())
 ['aba', 'emap', 'ucsd', 'whs']
 
 This provides a list of currently known hub names. (Note: atm the list
 is provided by the package since the INCF central hub managing the
 registry is a fast moving target still.)
 
-Knowing the names of available hubs one can optain proxies objects
+Knowing the names of available hubs one can optain proxy objects
 specific for a particular hub by calling
 
 >>> from incf.dai.utils import get_hub_by_name
@@ -101,7 +99,7 @@ Code: NotApplicableCode
 Text: Unrecognized URI.
 URL:  http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS&version=1.0.0&request=Execute&Identifier=DescribeSRS&ResponseForm=xml
 
-whereas providing required argument results in
+whereas calling a method correctly gives and appropriate response (hopefully)
 
 >>> response = whs.GetStructureNamesByPOI(format=None, srsName="Mouse_paxinos_1.0", x='1', y='4.3', z='1.78')  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 >>> response.keys()
@@ -111,6 +109,36 @@ u'Bckgrnd'
 
 The 'format=None' here works around issue
 http://code.google.com/p/incf-dai/issues/detail?id=14
+
+
+The Response in detail
+======================
+
+The custom response object returned from service calls here provides
+a variety of useful information like the HTTP response headers
+
+>>> response.headers # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+{'accept-ranges': 'bytes',
+ 'content-length': '1639',
+ 'content-location': 'http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS&version=1.0.0&request=Execute&Identifier=GetStructureNamesByPOI&DataInputs=srsName=Mouse_paxinos_1.0;y=4.3;z=1.78;x=1',
+ 'content-type': 'application/xml;charset=ISO-8859-1',
+ 'date': ...
+ 'server': 'Apache-Coyote/1.1, Noelios-Restlet-Engine/1.1..1',
+ 'status': '200',
+ 'vary': 'Accept-Charset, Accept-Encoding, Accept-Language, Accept'}
+
+and for convenience there is a short-cut to the content type
+
+>>> response.content_type
+'application/xml;charset=ISO-8859-1'
+
+(Raphael notes: I think this should be utf-8 though; 
+see http://code.google.com/p/incf-dai/issues/detail?id=12)
+
+
+
+Improving Performance
+=====================
 
 
 
