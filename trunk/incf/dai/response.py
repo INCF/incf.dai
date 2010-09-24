@@ -21,13 +21,6 @@ class Response(object):
 
     def __getitem__(self, key):
         return self.data[key]
-
-
-    def __getattr__(self, attr):
-        if attr in self.data.keys():
-            return self.data[attr]
-        else:
-            raise AttributeError
     
 
     def __str__(self):
