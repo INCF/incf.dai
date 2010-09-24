@@ -51,8 +51,8 @@ class Response(object):
 
     def handle_exception(self):
         """Raise custom exception"""
-        raise ApplicationError(self.ows_Exception['exceptionCode'],
-                               self.ows_Exception['ows_ExceptionText'],
+        raise ApplicationError(self.data.ows_Exception['exceptionCode'],
+                               self.data.ows_Exception['ows_ExceptionText'],
                                self.url,
                                )
 
