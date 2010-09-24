@@ -60,7 +60,6 @@ class HubProxy(object):
         url.append(format)
 
         if kw:
-            print kw
             url.append(encode_datainputs(**kw))
 
         url = "".join(url)
@@ -96,10 +95,10 @@ class HubProxy(object):
 def encode_datainputs(**kw):
     """Construct the 'DataInputs' query string from the keyword arguments"""
     encode = urllib.urlencode
-    items = []
+    data = []
     for key, value in kw.items():
-        items.append('='.join([key, value]))
-        return "&DataInputs=" + "@".join(items)
+        data.append('='.join([key, value]))
+    return "&DataInputs=" + "@".join(data)
 
 
 def add_method(inst, service_id, signatures):
