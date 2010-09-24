@@ -61,7 +61,7 @@ class HubProxy(object):
 
         if kw:
             print kw
-            url.append(self.encode_datainputs(**kw))
+            url.append(encode_datainputs(**kw))
 
         url = "".join(url)
         LOGGER.info("Calling %s" % url)
@@ -98,7 +98,7 @@ def encode_datainputs(**kw):
     encode = urllib.urlencode
     items = []
     for key, value in kw.items():
-        items.append('='.join([key, encode(value)]))
+        items.append('='.join([key, value]))
         return "&DataInputs=" + "@".join(items)
 
 
