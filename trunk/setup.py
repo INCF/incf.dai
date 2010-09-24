@@ -24,6 +24,7 @@ setup(name='incf.dai',
       install_requires=[
           'setuptools',
           'httplib2',
+          'odict',
       ],
       entry_points="""
       # -*- Entry points: -*-

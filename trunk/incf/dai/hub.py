@@ -2,6 +2,7 @@
 
 import httplib2
 import urllib
+from odict import odict
 
 from incf.dai.config import LOGGER
 from incf.dai.response import Response
@@ -24,11 +25,8 @@ class HubProxy(object):
                 signatures = extract_signatures(self)
                 # dynamically generating associated methods
                 for capability in self.capabilities:
-                    if capability in signatures.keys():
-                        kw = signatures[capability]
-                        add_method(self, capability, **kw)
-                    else:
-                        add_method(self, capability)
+                    add_method(self, capability, signatures)
+
 
     def __call__(self, 
                  version="1.0.0",
@@ -104,9 +102,10 @@ def encode_datainputs(**kw):
         return "&DataInputs=" + "@".join(items)
 
 
-def add_method(inst, service_id, **kw):
+def add_method(inst, service_id, signatures):
     """helper function for adding methods to a hub instance at runtime"""
     service_id = str(service_id)     # potential cast from unicode to str
+    kw = signatures.get(service_id)
     def localmethod(**kw):
         """Doc string - to be overwritten below"""
         return HubProxy.__call__(inst, 
@@ -115,7 +114,10 @@ def add_method(inst, service_id, **kw):
                                  identifier=service_id, 
                                  **kw
                                  )
-    localmethod.__doc__ = "Supported arguments: %s" % ", ".join(kw.keys())
+    if kw:
+        localmethod.__doc__ = "Supported arguments: %s" % ", ".join(kw.keys())
+    else:
+        localmethod.__doc__ = "This method takes no argumants"
     localmethod.__name__ = service_id
     setattr(inst, localmethod.__name__, localmethod)
 
@@ -132,7 +134,7 @@ def extract_signatures(hub):
             # happens if only one argument is supported
             description.DataInputs.Input = [description.DataInputs.Input]
         args = [str(e.ows_Identifier) for e in description.DataInputs.Input]
-        kw = {}
+        kw = odict()
         default = ""     # Can we infer defaults from the process descriptions?
         for arg in args:
             kw[arg] = default
