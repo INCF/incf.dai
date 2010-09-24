@@ -4,10 +4,14 @@ INCF Digital Atlasing Infrastructure
 
 This package provides a Python API to the Digital Brain Atlasing web
 services provided by the International Neuroinformatics Coordinating  
-Facility (INCF). To be useful and functional it requires a working
+Facility (INCF_). To be useful and functional it requires a working
 internet connection at runtime. The details of the core webservices 
 within the INCF Digital Atlasing Infrastructure (incf.dai) are available 
 from the specification_.
+
+To explore the functioanlity of this package interactively it is strongly
+recommended to use an enhanced interactive Python interpreter like
+IPython_ or bpython_.
 
 
 Discovering and Accessing Hubs
@@ -33,19 +37,20 @@ specific for a particular hub by calling
 >>> whs # doctest: +ELLIPSIS
 <incf.dai.hub.HubProxy object at ...>
 
-If you call for an unknow hub (or make a typo) you will get a KeyError
+If you call for an unknow hub (or make a typo) you will get a ``KeyError``
 
 >>> foo = get_hub_by_name('foo')
 Traceback (most recent call last):
 KeyError
 
-
 For introspection the URL to the service controller for this hub is
 available as 
+
 >>> whs.base_url
 'http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS'
 
 There are two methods all hubs are expected to provide:
+
 >>> whs.GetCapabilities  # doctest: +ELLIPSIS
 <bound method HubProxy.GetCapabilities of ...>
 
@@ -53,6 +58,7 @@ There are two methods all hubs are expected to provide:
 <bound method HubProxy.DescribeProcess of ...>
 
 Calling any of those methods returns a custom response object
+
 >>> response = whs.GetCapabilities()
 >>> response  # doctest: +ELLIPSIS
 <incf.dai.response.Response object at 0x...>
@@ -89,7 +95,7 @@ access to the data as in
 >>> response.QueryInfo
 {QueryUrl:u'http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS&version=1.0.0&request=Execute&Identifier=ListSRSs&ResponseForm=xml'}
 
-Omitting required arguments raises an 'ApplicationError'
+Omitting required arguments raises an ``ApplicationError``
 
 >>> response = whs.DescribeSRS()  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 Traceback (most recent call last):
@@ -107,14 +113,14 @@ whereas calling a method correctly gives and appropriate response (hopefully)
 >>> response.StructureTerms.StructureTerm.Code.data
 u'Bckgrnd'
 
-The 'format=None' here works around issue
+The ``format=None`` here works around issue
 http://code.google.com/p/incf-dai/issues/detail?id=14
 
 
 The Response in detail
 ======================
 
-The custom response object returned from service calls here provides
+The custom response object returned from service calls provides
 a variety of useful information like the HTTP response headers
 
 >>> sorted(response.headers.keys())  # doctest: +NORMALIZE_WHITESPACE
@@ -137,7 +143,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n
 <QueryInfo>\n ...
 
 which is probably more readable when printed (for this doc test
-calling 'print response' is avoided but in an interactive session 
+calling ``print response`` is avoided but in an interactive session 
 it should work just fine)
 
 >>> str(response)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
@@ -166,8 +172,8 @@ those cases only subscription access works)
 >>> response.data.xmlns
 u'http://www.incf.org/WaxML/'
 
-Again for convenience, the 'data' attribute can be bypassed
-as the 'data' content is "lifted" to the response object itself
+Again for convenience, the ``data`` attribute can be bypassed
+as the ``data`` content is lifted" to the response object itself
 
 >>> response.data.keys() == response.keys()
 True
@@ -179,14 +185,14 @@ u'http://www.w3.org/2001/XMLSchema-instance'
 
 Digging deeper into the response data requires knowledge of
 the response schema which is available from http://incf.org/WaxML
-or introspection of the content of the 'response.data' attribute.
+or introspection of the content of the ``response.data`` attribute.
 
 
 Improving Performance
 =====================
 
-Accessing a hub by calling 'get_hub_by_name' as presented above 
-triggers calling 'DescribeProcess' on hub proxy initialization to 
+Accessing a hub by calling ``get_hub_by_name`` as presented above 
+triggers calling ``DescribeProcess`` on hub proxy initialization to 
 infer the hubs capabilities and to dynamically create methods making 
 those capabilities readily available on the hub proxy. 
 Depending on context and intended usage you may want to avoid that 
@@ -194,7 +200,7 @@ overhead and rather prefer a "naked" hub proxy as in
 
 >>> whs_minimal = get_hub_by_name('whs', minimal=True)
 
-This avoids calling 'DescribeProcess' on initialization but in
+This avoids calling ``DescribeProcess`` on initialization but in
 return all you are left with is the generic call method that
 requires you to pass all arguments needed to construct the 
 proper WPS request
@@ -210,9 +216,9 @@ may prefer this approach.
 Logging
 =======
 
-Per default, all service calls are logged at 'INFO' level to a custom log 
-file in the current working directory including a time stamp, the package 
-name, the log level and the URL called.
+Per default, all service calls are logged at ``INFO`` level to a custom log 
+file (``incf.dai.log``)in the current working directory including a time stamp, 
+the package name, the log level and the URL called.
 
 
 Accessing Hubs not registered at INCF
@@ -220,7 +226,7 @@ Accessing Hubs not registered at INCF
 
 To connect to a hub not registered with INCF Central (e.g., a local
 hub under development) one can instanciate the proxy explicitly as in 
-(setting offline=True avoids ever calling the url)
+(setting ``offline=True`` avoids ever calling the url)
 
 >>> from incf.dai.hub import HubProxy
 >>> myhub = HubProxy('http://some.url?service=WPS', offline=True)
@@ -235,9 +241,9 @@ positional arguments: ('GET',)
 
 should always be available.
 The first argument here is to override the version specification which
-is not supported for 'GetCapabilities' calls. Second is the name of the 
+is not supported for ``GetCapabilities`` calls. Second is the name of the 
 request to be invoked at the hub.
-For convenience 'GetCapabilities' is also provided as a method
+For convenience ``GetCapabilities`` is also provided as a method
 on the hub proxy itself.
 
 >>> myhub.GetCapabilities()  # doctest: +ELLIPSIS
@@ -247,5 +253,7 @@ positional arguments: ('GET',)
 
 
 
-
+.. _INCF: http://incf.org
 .. _specification: http://code.google.com/p/incf-dai/wiki/INCFProjectSpecification
+.. _IPython: http://ipython.scipy.org/moin/
+.. _bpython: http://bpython-interpreter.org/
