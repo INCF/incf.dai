@@ -1,7 +1,6 @@
 """Generic proxy to an INCF DAI hub"""
 
 import httplib2
-import urllib
 from odict import odict
 
 from incf.dai.config import LOGGER
@@ -21,7 +20,8 @@ class HubProxy(object):
             self.proxy = httplib2.Http()
             if not minimal:
                 self.process_descriptions = self.get_process_descriptions()
-                self.capabilities = [e.ows_Identifier for e in self.process_descriptions]
+                self.capabilities = [e.ows_Identifier for 
+                                     e in self.process_descriptions]
                 signatures = extract_signatures(self)
                 # dynamically generating associated methods
                 for capability in self.capabilities:
@@ -95,7 +95,6 @@ class HubProxy(object):
 
 def encode_datainputs(**kw):
     """Construct the 'DataInputs' query string from the keyword arguments"""
-    encode = urllib.urlencode
     data = []
     for key, value in kw.items():
         data.append('='.join([key, value]))
@@ -105,17 +104,17 @@ def encode_datainputs(**kw):
 def add_method(inst, service_id, signatures):
     """helper function for adding methods to a hub instance at runtime"""
     service_id = str(service_id)     # potential cast from unicode to str
-    kw = signatures.get(service_id)
-    def localmethod(**kw):
+    kwargs = signatures.get(service_id)
+    def localmethod(**kwargs):
         """Doc string - to be overwritten below"""
         return HubProxy.__call__(inst, 
                                  version="1.0.0",
                                  request='Execute', 
                                  identifier=service_id, 
-                                 **kw
+                                 **kwargs
                                  )
-    if kw:
-        localmethod.__doc__ = "Supported arguments: %s" % ", ".join(kw.keys())
+    if kwargs:
+        localmethod.__doc__ = "Supported arguments: %s" % ", ".join(kwargs.keys())
     else:
         localmethod.__doc__ = "This method takes no argumants"
     localmethod.__name__ = service_id
@@ -134,11 +133,11 @@ def extract_signatures(hub):
             # happens if only one argument is supported
             description.DataInputs.Input = [description.DataInputs.Input]
         args = [str(e.ows_Identifier) for e in description.DataInputs.Input]
-        kw = odict()
+        kwargs = odict()
         default = ""     # Can we infer defaults from the process descriptions?
         for arg in args:
-            kw[arg] = default
-        signatures[service] = kw
+            kwargs[arg] = default
+        signatures[service] = kwargs
 
     return signatures
 
