@@ -147,14 +147,14 @@ def extract_signatures(hub):
 
 class LocalProxy(object):
     """Dummy proxy for offline testing"""
-    def request(self, url, *args, **kw):
+    def request(self, url, *args): #, **kw):
         """Fake a request by printing the URL that would be called
         and returning a minimal response tuple."""
         print "Requested URL:", url
         if args:
             print "positional arguments:", args
-        if kw:
-            print "keyword arguments:", kw
+#        if kw:
+#            print "keyword arguments:", kw
         return ({'content-type':'text/plain',
                  'status':'200',
                  }, 

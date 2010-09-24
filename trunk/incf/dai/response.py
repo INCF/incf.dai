@@ -41,7 +41,7 @@ class Response(object):
             return []
         return self.data.keys()
 
-
+    @property
     def content_type(self):
         """Return the content type from the header"""
         return self.headers['content-type']
