@@ -182,7 +182,6 @@ the response schema which is available from http://incf.org/WaxML
 or introspection of the content of the 'response.data' attribute.
 
 
-
 Improving Performance
 =====================
 
@@ -206,6 +205,20 @@ proper WPS request
 
 Once you know what you need to call from your own code you
 may prefer this approach.
+
+
+Logging
+=======
+
+Per default, all service calls are logged at 'INFO' level to 
+a custom log file in the current working directory
+
+>>> import os
+>>> 'incf.dai.log' in os.listdir('.')
+True
+
+including a time stap, the package name, teh log level and the
+URL called.
 
 
 Accessing Hubs not registered at INCF
