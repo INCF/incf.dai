@@ -97,7 +97,7 @@ def encode_datainputs(**kw):
     """Construct the 'DataInputs' query string from the keyword arguments"""
     data = []
     for key, value in kw.items():
-        data.append('='.join([key, value]))
+        data.append('='.join([str(key), str(value)]))
     return "&DataInputs=" + ";".join(data)
 
 
