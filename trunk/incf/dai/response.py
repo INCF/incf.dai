@@ -43,7 +43,7 @@ class Response(object):
 
 
     def process_exceptions(self):
-        """Check for 4?? response codes raise by the service"""
+        """Check for 4?? response codes raised by the service"""
         status = self.headers['status']
         if status.startswith('4'):
             return self.handle_exception()
@@ -51,12 +51,14 @@ class Response(object):
 
     def handle_exception(self):
         """Raise custom exception"""
-        raise ApplicationError(self.data.ows_Exception['exceptionCode'],
-                               self.data.ows_Exception['ows_ExceptionText'],
-                               self.url,
-                               )
-
-
+        if self.data is not None:
+            raise ApplicationError(self.data.ows_Exception['exceptionCode'],
+                                   self.data.ows_Exception['ows_ExceptionText'],
+                                   self.url,
+                                   )
+        else:
+            raise Exception, self.headers
+ 
 
 class ApplicationError(Exception):
     """Custom error to be raised when a hub service returns an error message"""

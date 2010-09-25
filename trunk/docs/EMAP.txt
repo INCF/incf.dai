@@ -65,12 +65,32 @@ Checking ``GetGenesByPOI``
 
 Checking ``TransformPOI``
 
->>> r = emap.TransformPOI(format=None,inputSrsName='Mouse_WHS_1.0',targetSrsName='Mouse_EMAP-T26_1.0',x='12',y='-29',z='-73')
+>>> r = emap.TransformPOI(format='xml', inputSrsName='Mouse_WHS_1.0',
+...    targetSrsName='Mouse_EMAP-T26_1.0', x='12', y='-29', z='-73')
 >>> r.POI.gml_Point.gml_pos
 u'207.869 350.841 206.455'
 >>> r.POI.gml_Point.srsName
 u'Mouse_EMAP-T26_1.0'
 
-(are we sure the unqualified coordinate triple will always suffice?)
+ATM this does not work. No idea why. The error obtained is
 
+  ERROR: An unexpected error occurred while tokenizing input
+  The following traceback may be corrupted or invalid
+  The error message is: ('EOF in multi-line statement', (6, 0))
+
+when trying to call the URL constructed for the call above:
+
+incf.dai: INFO     Calling
+http://incf-dev.crbs.ucsd.edu:8080/atlas-emap?service=WPS&version=1.0.0&request=Execute&Identifier=TransformPOI&DataInputs=y=-29;x=12;targetSrsName=Mouse_EMAP-T26_1.0;z=-73;inputSrsName=Mouse_WHS_1.0
+
+When omitting 'format' it gives a 404 when requesting 'xml' it 
+gives the default application error
+
+  ApplicationError: 
+  Code: NotApplicableCode
+  Text: Unrecognized URI.
+  URL:  http://incf-dev.crbs.ucsd.edu:8080/atlas-emap?service=WPS&version=1.0.0&request=Execute&Identifier=TransformPOI&ResponseForm=xml&DataInputs=y=-29;x=12;targetSrsName=Mouse_EMAP-T26_1.0;z=-73;inputSrsName=Mouse_WHS_1.0
+
+Maybe something with the forewarding to Edinburgh goes wrong?
+Stopping here now.
 
