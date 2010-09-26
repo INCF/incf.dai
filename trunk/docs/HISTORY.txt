@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.6dev (unreleased)
--------------------
+0.6 (2010-09-26)
+----------------
 
 - Initial release
    the version number (0.6) refers to the INCF.DAI service specification
