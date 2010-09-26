@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wps:Capabilities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wps" xmlns:wps="http://www.opengis.net/wps" xmlns:ows="http://www.opengis.net/ows" version="1.0.0" xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 ../wpsGetCapabilities_request.xsd">
+
+<ows:ServiceIdentification xmlns:ows="http://www.opengis.net/ows">
+
+<ows:Title>Emage Services</ows:Title>
+
+<ows:Abstract>Emage Services are created to access various emage atlas space features that are offered by UCSD to its clients.</ows:Abstract>
+
+<ows:ServiceType>WPS</ows:ServiceType>
+
+<ows:ServiceTypeVersion>0.2.4</ows:ServiceTypeVersion>
+
+<ows:Fees>NONE</ows:Fees> 
+
+<ows:AccessConstraints>NONE</ows:AccessConstraints>
+
+ </ows:ServiceIdentification>
+
+<ows:ServiceProvider>
+
+<ows:ProviderName>Asif Memon</ows:ProviderName>
+
+<ows:ServiceContact>amemon@ncmir.ucsd.edu</ows:ServiceContact>
+
+</ows:ServiceProvider>
+
+<ows:OperationsMetadata>
+
+<ows:Operation name="GetCapabilities" />
+
+</ows:OperationsMetadata> 
+
+<wps:ProcessOfferings>
+
+<wps:Process>
+
+<ows:Identifier>GetGenesByPOI</ows:Identifier>
+
+<ows:Title>Get genes by POI</ows:Title> 
+
+<ows:Description>Returns genes segmented for the given point of interest on the map</ows:Description>
+
+</wps:Process>
+
+</wps:ProcessOfferings>
+
+<wps:Languages>
+
+<wps:Default>
+
+<ows:Language>en-CA</ows:Language>
+
+</wps:Default>
+
+<wps:Supported>
+
+<ows:Language>en-CA</ows:Language>
+
+</wps:Supported>
+
+</wps:Languages>
+
+</wps:Capabilities>
+
+

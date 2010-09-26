@@ -1,0 +1,96 @@
+========
+EMAP Hub
+========
+
+Comprehensive doctest for the INCF DAI hub provided by EMAP
+
+>>> from incf.dai.utils import get_hub_by_name
+>>> emap = get_hub_by_name('emap')
+>>> sorted(emap.capabilities)  # doctest: +NORMALIZE_WHITESPACE
+[u'DescribeSRS',
+ u'GetGenesByPOI',
+ u'GetTransformationChain',
+ u'ListSRSs',
+ u'ListTransformations',
+ u'TransformPOI']
+
+
+Checking ``ListSRSs``
+
+(not yet implemented)
+#>>> r = emap.ListSRSs()
+#>>> r.keys()
+#[u'QueryInfo', u'xmlns_gml', u'xmlns', u'Orientations', u'SRSList']
+#>>> r.SRSList.SRS.Name.data
+#u'Mouse_Paxinos_1.0'
+
+
+Checking ``DescribeSRS``
+
+(Seems like this is not implemented yet - or I have not yet figured 
+out how to call it.)
+
+Checking ``ListTransformations``
+
+>>> r = emap.ListTransformations(format=None, inputSrsName='Mouse_Paxinos_1.0', outputSrsName='Mouse_ABAreference_1.0', filter='Cerebellum')
+>>> [t.code for t in r.TransformationList.CoordinateTransformation] # doctest: +NORMALIZE_WHITESPACE
+[u'Mouse_Paxinos_1.0_To_Mouse_WHS_0.9',
+ u'Mouse_WHS_0.9_To_Mouse_AGEA_1.0',
+ u'Mouse_AGEA_1.0_To_Mouse_ABAvoxel_1.0',
+ u'Mouse_ABAvoxel_1.0_To_Mouse_ABAreference_1.0']
+
+
+Checking ``GetTransformationChain``
+
+>>> r = emap.GetTransformationChain(format=None, inputSrsName='Mouse_Paxinos_1.0', outputSrsName='Mouse_ABAreference_1.0', filter='Cerebellum')
+>>> [t.code for t in r.CoordinateTransformationChain.CoordinateTransformation]
+[u'Mouse_Paxinos_1.0_To_Mouse_WHS_0.9',
+ u'Mouse_WHS_0.9_To_Mouse_AGEA_1.0',
+ u'Mouse_AGEA_1.0_To_Mouse_ABAvoxel_1.0',
+ u'Mouse_ABAvoxel_1.0_To_Mouse_ABAreference_1.0']
+
+(isn't that redundant given ``ListTransformations``?)
+
+
+Checking ``GetGenesByPOI``
+
+#>>> r = emap.GetGenesByPOI(format=None, srsName='Mouse_paxinos_1.0', x='-2', y='-5.3', z='6', vocabulary='Mouse_paxinos_1.0', filter='structureset:Fine')
+#>>> r.StructureTerms.StructureTerm.Code.data
+#u'VP'
+#>>> r.StructureTerms.StructureTerm.Name
+#''
+#>>> r.StructureTerms.StructureTerm.Description
+#u'ventral pallidum'
+
+
+Checking ``TransformPOI``
+
+>>> r = emap.TransformPOI(format='xml', inputSrsName='Mouse_WHS_1.0',
+...    targetSrsName='Mouse_EMAP-T26_1.0', x='12', y='-29', z='-73')
+>>> r.POI.gml_Point.gml_pos
+u'207.869 350.841 206.455'
+>>> r.POI.gml_Point.srsName
+u'Mouse_EMAP-T26_1.0'
+
+ATM this does not work. No idea why. The error obtained is
+
+  ERROR: An unexpected error occurred while tokenizing input
+  The following traceback may be corrupted or invalid
+  The error message is: ('EOF in multi-line statement', (6, 0))
+
+when trying to call the URL constructed for the call above:
+
+incf.dai: INFO     Calling
+http://incf-dev.crbs.ucsd.edu:8080/atlas-emap?service=WPS&version=1.0.0&request=Execute&Identifier=TransformPOI&DataInputs=y=-29;x=12;targetSrsName=Mouse_EMAP-T26_1.0;z=-73;inputSrsName=Mouse_WHS_1.0
+
+When omitting 'format' it gives a 404 when requesting 'xml' it 
+gives the default application error
+
+  ApplicationError: 
+  Code: NotApplicableCode
+  Text: Unrecognized URI.
+  URL:  http://incf-dev.crbs.ucsd.edu:8080/atlas-emap?service=WPS&version=1.0.0&request=Execute&Identifier=TransformPOI&ResponseForm=xml&DataInputs=y=-29;x=12;targetSrsName=Mouse_EMAP-T26_1.0;z=-73;inputSrsName=Mouse_WHS_1.0
+
+Maybe something with the forewarding to Edinburgh goes wrong?
+Stopping here now.
+
