@@ -89,16 +89,19 @@ u'wps_ProcessOutputs', u'wps_Status', u'xml_lang', u'xmlns_ogc',
 u'xmlns_ows', u'xmlns_wps', u'xmlns_xlink', u'xmlns_xsi', 
 u'xsi_schemaLocation']
 
-
->>> response['SRSList']  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+>>> response['wps_ProcessOutputs']['wps_Output']['wps_Data']['wps_ComplexData']['ListSRSResponse']['
+SRSCollection']['SRSList']  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 {SRS:[{Area:{structureName:u'whole brain'}, 
        Author:{authorCode:u'WHS', ...
 
 For further convenience, the response object also supports attribute-like 
 access to the data as in
 
->>> response.QueryInfo
-{QueryUrl:u'http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS&version=1.0.0&request=Execute&Identifier=ListSRSs&ResponseForm=xml'}
+>>> response.wps_Status  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+{creationTime: ... , wps_ProcessSucceeded:u'Process execution
+finished@ ...'}
+
+Note how the namespaces are preserved as prefixes of the attribute names.
 
 Omitting required arguments raises an ``ApplicationError``
 
