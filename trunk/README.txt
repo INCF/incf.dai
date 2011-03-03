@@ -141,12 +141,7 @@ and for convenience there is a short-cut to the content type
 The source of the returned response page is available as
 
 >>> response.content # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-'<?xml version="1.0" encoding="UTF-8"?>\n
-<wps:ExecuteResponse 
-xmlns:wps="http://www.opengis.net/wps/1.0.0" 
-xmlns:ows="http://www.opengis.net/ows/1.1" 
-xmlns:ogc="http://www.opengis.net/ogc" ...
-
+'<?xml version="1.0" encoding="UTF-8"?>\n...
 
 which is probably more readable when printed (for this doc test
 calling ``print response`` is avoided but in an interactive session 
