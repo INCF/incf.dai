@@ -77,20 +77,19 @@ and all methods listed are available on the hub proxy right away
 
 >>> sorted(whs.__dict__.keys())   # doctest: +NORMALIZE_WHITESPACE
 ['DescribeSRS', 'GetStructureNamesByPOI', 'ListSRSs',
-u'ListTransformations', u'TransformPOI', 'base_url', 
+'ListTransformations', 'TransformPOI', 'base_url', 
 'capabilities', 'process_descriptions', 'proxy']
 
 like in 
 
 >>> response = whs.ListSRSs()
->>> sorted(response.keys())
+>>> sorted(response.keys())  # doctest: +NORMALIZE_WHITESPACE
 [u'service', u'serviceInstance', u'version', u'wps_Process', 
 u'wps_ProcessOutputs', u'wps_Status', u'xml_lang', u'xmlns_ogc', 
 u'xmlns_ows', u'xmlns_wps', u'xmlns_xlink', u'xmlns_xsi', 
 u'xsi_schemaLocation']
 
->>> response['wps_ProcessOutputs']['wps_Output']['wps_Data']['wps_ComplexData']['ListSRSResponse']['
-SRSCollection']['SRSList']  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+>>> response['wps_ProcessOutputs']['wps_Output']['wps_Data']['wps_ComplexData']['ListSRSResponse']['SRSCollection']['SRSList']  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 {SRS:[{Area:{structureName:u'whole brain'}, 
        Author:{authorCode:u'WHS', ...
 
@@ -98,10 +97,9 @@ For further convenience, the response object also supports attribute-like
 access to the data as in
 
 >>> response.wps_Status  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-{creationTime: ... , wps_ProcessSucceeded:u'Process execution
-finished@ ...'}
+{creationTime: ... 
 
-Note how the namespaces are preserved as prefixes of the attribute names.
+Note how the namespaces are preserved as prefixes of the key and attribute names.
 
 Omitting required arguments raises an ``ApplicationError``
 
