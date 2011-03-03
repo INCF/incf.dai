@@ -1,0 +1,101 @@
+========
+UCSD Hub
+========
+
+Comprehensive doctest for the INCF DAI hub provided by UCSD
+
+>>> from incf.dai.utils import get_hub_by_name
+>>> ucsd = get_hub_by_name('ucsd')
+>>> sorted(ucsd.capabilities)  # doctest: +NORMALIZE_WHITESPACE
+[u'DescribeSRS',
+ u'Get2DImagesByPOI',
+ u'GetCellsByPOI',
+ u'GetCellsByURI',
+ u'GetStructureNamesByPOI',
+ u'GetTransformationChain',
+ u'Images2DByURI',
+ u'ListSRSs',
+ u'ListTransformations',
+ u'Retrieve2DImage',
+ u'TransformPOI']
+
+
+Checking ``ListSRSs``
+
+>>> r = ucsd.ListSRSs()
+>>> r.keys()
+[u'QueryInfo', u'xmlns_gml', u'xmlns', u'Orientations', u'SRSList']
+>>> r.SRSList.SRS.Name.data
+u'Mouse_Paxinos_1.0'
+
+
+Checking ``DescribeSRS``
+
+(Seems like this is not implemented yet - or I have not yet figured 
+out how to call it.)
+
+Checking ``ListTransformations``
+
+>>> r = ucsd.ListTransformations(format=None, inputSrsName='Mouse_Paxinos_1.0', outputSrsName='Mouse_ABAreference_1.0', filter='Cerebellum')
+>>> [t.code for t in r.TransformationList.CoordinateTransformation] # doctest: +NORMALIZE_WHITESPACE
+[u'Mouse_Paxinos_1.0_To_Mouse_WHS_0.9',
+ u'Mouse_WHS_0.9_To_Mouse_AGEA_1.0',
+ u'Mouse_AGEA_1.0_To_Mouse_ABAvoxel_1.0',
+ u'Mouse_ABAvoxel_1.0_To_Mouse_ABAreference_1.0']
+
+
+Checking ``GetTransformationChain``
+
+>>> r = ucsd.GetTransformationChain(format=None, inputSrsName='Mouse_Paxinos_1.0', outputSrsName='Mouse_ABAreference_1.0', filter='Cerebellum')
+>>> [t.code for t in r.CoordinateTransformationChain.CoordinateTransformation]
+[u'Mouse_Paxinos_1.0_To_Mouse_WHS_0.9',
+ u'Mouse_WHS_0.9_To_Mouse_AGEA_1.0',
+ u'Mouse_AGEA_1.0_To_Mouse_ABAvoxel_1.0',
+ u'Mouse_ABAvoxel_1.0_To_Mouse_ABAreference_1.0']
+
+(isn't that redundant given ``ListTransformations``?)
+
+
+Checking ``GetStructureNameByPOI``
+
+>>> r = ucsd.GetStructureNamesByPOI(format=None, srsName='Mouse_paxinos_1.0', x='-2', y='-5.3', z='6', vocabulary='Mouse_paxinos_1.0', filter='structureset:Fine')
+>>> r.StructureTerms.StructureTerm.Code.data
+u'VP'
+>>> r.StructureTerms.StructureTerm.Name
+''
+>>> r.StructureTerms.StructureTerm.Description
+u'ventral pallidum'
+
+(why is ``Description`` populated but ``Name`` is empty?)
+
+
+Checking ``TransformPOI``
+
+>>> r = ucsd.TransformPOI(format=None, inputSrsName='Mouse_Paxinos_1.0', outputSrsName='Mouse_WHS_0.9', x='1', y='4.3', z='1.78', filter='cerebellum')
+>>> r.POI.gml_Point.gml_pos
+u'308 642 224'
+>>> r.POI.gml_Point.srsName
+u'Mouse_WHS_0.9'
+
+(are we sure the unqualified coordinate triple will always suffice?)
+
+
+Checking ``Get2DImagesByPOI``
+
+>>> r = ucsd.Get2DImagesByPOI(format=None, srsName='Mouse_ABAvoxel_1.0', x='263', y='159', z='227', filter='maptype:Sagittal', tolerance='3')
+
+This returns a total of 10 images at the moment
+
+>>> len(r.Image2Dcollection)
+10
+
+the first of which contains the following info (no idea whether that 
+will always be the first)
+
+>>> r.Image2Dcollection[0].Image2D.ImageSource.format
+u'image/png'
+>>> r.Image2Dcollection[0].Image2D.ImageSource.type
+u'url'
+>>> r.Image2Dcollection[0].Image2D.ImageSource.data
+u'http://image.wholebraincatalog.org/cgi-bin/mapserv?map=crbsatlas/mapfiles/gensat_3363_modified_sm_transformed-ms.map&LAYERS=gensat_penk1_09&FORMAT=png24&VERSION=1.1.1&REQUEST=GetMap'
+

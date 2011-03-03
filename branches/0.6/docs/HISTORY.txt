@@ -1,0 +1,15 @@
+Changelog
+=========
+
+0.6.1 (unreleased)
+------------------
+
+- Nothing changed yet.
+
+
+0.6 (2010-09-26)
+----------------
+
+- Initial release
+   the version number (0.6) refers to the INCF.DAI service specification
+   underlying this release - this is still very much work in progress

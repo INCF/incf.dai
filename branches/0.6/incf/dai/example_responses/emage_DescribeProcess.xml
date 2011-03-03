@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wps:ProcessDescriptions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wps" xmlns:wps="http://www.opengis.net/wps" xmlns:ows="http://www.opengis.net/ows" version="1.0.0" xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 ../wpsGetCapabilities_request.xsd">
+
+<ProcessDescription>
+
+<ows:Identifier>GetGenesByStructureName</ows:Identifier>
+
+<ows:Title>Get genes by Structure Name</ows:Title>
+
+<ows:Description>Returns genes segmented for the structure name</ows:Description>
+
+<DataInputs>
+
+<Input>
+
+<ows:Identifier>StructureName</ows:Identifier>
+
+<ows:Title>Structure Name</ows:Title>
+
+<ows:Abstract>Structure Name</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:double"/>
+
+</LiteralData>
+
+</Input>
+
+<Input>
+
+<ows:Identifier>SRSCODE</ows:Identifier>
+
+<ows:Title>Atlas Space Name</ows:Title>
+
+<ows:Abstract>Name of an atlas space such as EMAGE</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:string"/>
+
+</LiteralData>
+
+</Input>
+
+<Input>
+
+<ows:Identifier>Vocabulary</ows:Identifier>
+
+<ows:Title>Space name</ows:Title>
+
+<ows:Abstract>Name of an atlas space such as ABARef, or ABAVox, or WHS, or UCSD</ows:Abstract>
+
+<LiteralData>
+
+<ows:DataType ows:reference="xs:string"/>
+
+</LiteralData>
+
+</Input>
+
+</DataInputs>
+
+<ProcessOutputs>
+
+<Output>
+
+<ows:Identifier>Genes</ows:Identifier>
+
+<ows:Title>Genes</ows:Title>
+
+<ows:Abstract>Genes segmented for the given point of interest</ows:Abstract>
+
+<ComplexOutput>
+
+<Default>
+
+<Format>
+
+<MimeType>text/ascii</MimeType>
+
+<MimeType>http/ascii</MimeType>
+
+</Format>
+
+</Default>
+
+</ComplexOutput>
+
+</Output>
+
+</ProcessOutputs>
+
+</ProcessDescription>
+
+</wps:ProcessDescriptions>
+
+

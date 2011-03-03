@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wps:Capabilities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wps" xmlns:wps="http://www.opengis.net/wps" xmlns:ows="http://www.opengis.net/ows" version="1.0.0" xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 ../wpsGetCapabilities_request.xsd">
+
+<ows:ServiceIdentification xmlns:ows="http://www.opengis.net/ows">
+
+<ows:Title>ABA Services</ows:Title>
+
+<ows:Abstract>ABA Services are created to access various aba atlas space features that are offered by UCSD to its clients.</ows:Abstract>
+
+<ows:ServiceType>WPS</ows:ServiceType>
+
+<ows:ServiceTypeVersion>0.2.4</ows:ServiceTypeVersion>
+
+<ows:Fees>NONE</ows:Fees> 
+
+<ows:AccessConstraints>NONE</ows:AccessConstraints>
+
+ </ows:ServiceIdentification>
+
+<ows:ServiceProvider>
+
+<ows:ProviderName>Asif Memon</ows:ProviderName>
+
+<ows:ServiceContact>amemon@ncmir.ucsd.edu</ows:ServiceContact>
+
+</ows:ServiceProvider>
+
+<ows:OperationsMetadata>
+
+<ows:Operation name="GetCapabilities" />
+
+</ows:OperationsMetadata> 
+
+<wps:ProcessOfferings>
+
+<wps:Process>
+
+<ows:Identifier>GetCorrelationMap</ows:Identifier>
+
+<ows:Title>Get Correlation Map</ows:Title> 
+
+<ows:Description>This method will return the URL and load the correlation map interface in the browser</ows:Description>
+
+</wps:Process>
+
+<wps:Process>
+
+<ows:Identifier>GetStructureNameByPOI</ows:Identifier>
+
+<ows:Title>Get structure name by POI</ows:Title> 
+
+<ows:Description>Returns Fine/Anatomic structures segmented for the point of interest on map</ows:Description>
+
+</wps:Process>
+
+<wps:Process>
+
+<ows:Identifier>Get2DImageAtPOI</ows:Identifier>
+
+<ows:Title>Get 2D Image at POI</ows:Title> 
+
+<ows:Description>Returns 2 Dimensional image based on point of interest on the map</ows:Description>
+
+</wps:Process>
+
+<wps:Process>
+
+<ows:Identifier>GetGenesByPOI</ows:Identifier>
+
+<ows:Title>Get genes by POI</ows:Title> 
+
+
+<ows:Description>Returns genes segmented for the given point of interest on the map</ows:Description>
+
+</wps:Process>
+
+<wps:Process>
+
+<ows:Identifier>GetGenesByStructureName</ows:Identifier>
+
+<ows:Title>Get genes by Structure Name</ows:Title> 
+
+<ows:Description>Returns genes segmented for structure name</ows:Description>
+
+</wps:Process>
+
+<wps:Process>
+
+<ows:Identifier>SpaceTransformation</ows:Identifier>
+
+<ows:Title>Atlas Space Transformation from ABA to AGEA, and AGEA to ABA</ows:Title> 
+
+<ows:Description>Finds, transforms and executes the best transformation available from ABA to AGEA, and AGEA to ABA</ows:Description>
+
+</wps:Process>
+
+</wps:ProcessOfferings>
+
+<wps:Languages>
+
+<wps:Default>
+
+<ows:Language>en-CA</ows:Language>
+
+</wps:Default>
+
+<wps:Supported>
+
+<ows:Language>en-CA</ows:Language>
+
+</wps:Supported>
+
+</wps:Languages>
+
+</wps:Capabilities>
+
