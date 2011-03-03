@@ -164,10 +164,11 @@ u'wps_ProcessOutputs', u'service', u'xmlns_xsi', u'xmlns_ows',
 u'xsi_schemaLocation', u'version', u'xmlns_ogc', u'xmlns_wps', 
 u'serviceInstance']
 
->>> response.data['StructureTerms']  # doctest: +NORMALIZE_WHITESPACE
+>>> wps_Data = response.data['wps_ProcessOutputs']['wps_Output']['wps_Data']
+>>> wps_Data['wps_ComplexData']['StructureTermsResponse']['StructureTerms']  # doctest: +NORMALIZE_WHITESPACE
 {StructureTerm:{Code:{codeSpace:u'Mouse_paxinos_1.0', 
-isDefault:u'true', data:u'Bckgrnd'}, Description:u'Term - Bckgrnd 
-derived from WHS hub based on the supplied POI.', Name:''}}
+isDefault:u'true', data:u'Cx'}, Description:u'Term - Cx
+derived from WHS hub based on the supplied POI.', Name:''}, hubCode:u'WHS'}
 
 but also supports attribute-like access (as long as the keys don't
 contain characters that make them unsuited as attribute names - in
