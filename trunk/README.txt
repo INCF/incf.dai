@@ -97,7 +97,7 @@ For further convenience, the response object also supports attribute-like
 access to the data as in
 
 >>> response.wps_Status  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-{creationTime: ...
+{creationTime:...
 
 Note how the namespaces are preserved as prefixes of the key and attribute names.
 
@@ -116,7 +116,7 @@ whereas calling a method correctly gives and appropriate response (hopefully)
 >>> response = whs.GetStructureNamesByPOI(format=None, srsName="Mouse_paxinos_1.0", x='1', y='4.3', z='1.78')  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 >>> response.keys()
 [u'xmlns_xlink', u'wps_Process', u'xml_lang', u'wps_Status', u'wps_ProcessOutputs', u'service', u'xmlns_xsi', u'xmlns_ows', u'xsi_schemaLocation', u'version', u'xmlns_ogc', u'xmlns_wps', u'serviceInstance']
->>> response.wps_ProcessOutputs.wps_Output.wps_Data.wps_ComplexData.StructureTermsResponse.StructureTerms.StructureTerm.Code
+>>> response.wps_ProcessOutputs.wps_Output.wps_Data.wps_ComplexData.StructureTermsResponse.StructureTerms.StructureTerm.Code.data
 u'Cx'
 
 The ``format=None`` here works around issue
@@ -130,30 +130,30 @@ The custom response object returned from service calls provides
 a variety of useful information like the HTTP response headers
 
 >>> sorted(response.headers.keys())  # doctest: +NORMALIZE_WHITESPACE
-['accept-ranges', 'content-length', 'content-location', 
- 'content-type', 'date', 'server', 'status', 'vary']
+['connection', 'content-location', 'content-type', 'date', 'status', 
+'transfer-encoding']
 
 and for convenience there is a short-cut to the content type
 
 >>> response.content_type
-'application/xml;charset=ISO-8859-1'
-
-(Raphael notes: I think this should be utf-8 though; 
-see http://code.google.com/p/incf-dai/issues/detail?id=12)
+'text/xml;charset=UTF-8'
 
 The source of the returned response page is available as
 
 >>> response.content # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-'<StructureTermsResponse xmlns="http://www.incf.org/WaxML/" 
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n  
-<QueryInfo>\n ...
+'<?xml version="1.0" encoding="UTF-8"?>\n
+<wps:ExecuteResponse 
+xmlns:wps="http://www.opengis.net/wps/1.0.0" 
+xmlns:ows="http://www.opengis.net/ows/1.1" 
+xmlns:ogc="http://www.opengis.net/ogc" ...
+
 
 which is probably more readable when printed (for this doc test
 calling ``print response`` is avoided but in an interactive session 
 it should work just fine)
 
 >>> str(response)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-'<?xml version="1.0" ?><StructureTermsResponse  ...
+'<?xml version="1.0" ?><wps:ExecuteResponse service="WPS"  ...
 
 If the content type is XML there will also be a 'data' attribute
 holding the parsed response 
@@ -163,8 +163,11 @@ holding the parsed response
 
 which acts like a nested dictionary 
 
->>> response.data.keys()
-[u'QueryInfo', u'xmlns_xsi', u'xmlns', u'StructureTerms']
+>>> response.data.keys() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+[u'xmlns_xlink', u'wps_Process', u'xml_lang', u'wps_Status', 
+u'wps_ProcessOutputs', u'service', u'xmlns_xsi', u'xmlns_ows', 
+u'xsi_schemaLocation', u'version', u'xmlns_ogc', u'xmlns_wps', 
+u'serviceInstance']
 
 >>> response.data['StructureTerms']  # doctest: +NORMALIZE_WHITESPACE
 {StructureTerm:{Code:{codeSpace:u'Mouse_paxinos_1.0', 
@@ -175,8 +178,8 @@ but also supports attribute-like access (as long as the keys don't
 contain characters that make them unsuited as attribute names - in
 those cases only subscription access works)
 
->>> response.data.xmlns
-u'http://www.incf.org/WaxML/'
+>>> response.data.xmlns_xsi
+u'http://www.w3.org/2001/XMLSchema-instance'
 
 Again for convenience, the ``data`` attribute can be bypassed
 as the ``data`` content is lifted" to the response object itself
@@ -212,8 +215,11 @@ requires you to pass all arguments needed to construct the
 proper WPS request
 
 >>> response = whs_minimal(version='1.0.0', request='Execute', identifier='ListSRSs')
->>> sorted(response.keys())
-[u'Orientations', u'QueryInfo', u'SRSList', u'xmlns', u'xmlns_gml']
+>>> sorted(response.keys()) 
+[u'service', u'serviceInstance', u'version', u'wps_Process',
+u'wps_ProcessOutputs', u'wps_Status', u'xml_lang', u'xmlns_ogc',
+u'xmlns_ows', u'xmlns_wps', u'xmlns_xlink', u'xmlns_xsi',
+u'xsi_schemaLocation']
 
 Once you know what you need to call from your own code you
 may prefer this approach.
