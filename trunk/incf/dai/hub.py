@@ -73,14 +73,15 @@ class HubProxy(object):
         """A list of all services provided by the hub"""
         return self(version=None, request='GetCapabilities')
 
-    def DescribeProcess(self, version="1.0.0", identifier=None):
+    def DescribeProcess(self, version="1.0.0", identifier='ALL'):
         """Detailed description of services at the hub.
         'identifier' specifies the service to be described.
-        if None (default) all services are described.
+        if 'ALL' (default) all services are described.
         """
         return self(version=version, 
                     request='DescribeProcess', 
                     identifier=identifier,
+                    format=None,
                     )
 
     

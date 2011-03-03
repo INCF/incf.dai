@@ -11,7 +11,7 @@ class Response(object):
         self.headers = response[0]
         self.content = response[1]
         self.url = url
-        if 'application/xml' in self.content_type:
+        if '/xml' in self.content_type:
             self.data = xml2obj(response[1])
             self.__dict__.update(self.data)
         else:
@@ -24,7 +24,7 @@ class Response(object):
     
 
     def __str__(self):
-        if 'application/xml' in self.content_type:
+        if '/xml' in self.content_type:
             doc = xml.dom.minidom.parseString(self.content)
             return doc.toprettyxml(indent='', newl='')
         return self.content

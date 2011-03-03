@@ -23,7 +23,7 @@ to share. To discover available hubs there is a utility function
 
 >>> from incf.dai.utils import list_hub_names
 >>> sorted(list_hub_names())
-['aba', 'emap', 'ucsd', 'whs']
+['aba', 'central', 'emap', 'ucsd', 'whs']
 
 This provides a list of currently known hub names. (Note: atm the list
 is provided by the package since the INCF central hub managing the
