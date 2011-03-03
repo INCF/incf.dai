@@ -1,9 +1,10 @@
 """Hardcoded meta data as long as we don't get it from the central hub"""
 
-HUBS = {'aba'  :'http://incf-dev.crbs.ucsd.edu:8080/atlas-aba?service=WPS',
-        'emap' :'http://incf-dev.crbs.ucsd.edu:8080/atlas-emap?service=WPS',
-        'ucsd' :'http://incf-dev.crbs.ucsd.edu:8080/atlas-ucsd?service=WPS',
-        'whs'  :'http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS',
+HUBS = {'aba'    :'http://incf-dev-local.crbs.ucsd.edu/aba/atlas?service=WPS',
+        'central':'http://incf-dev-local.crbs.ucsd.edu/central/atlas?service=WPS'
+        'emap'   :'http://incf-dev-local.crbs.ucsd.edu/emap/atlas?service=WPS',
+        'ucsd'   :'http://incf-dev-local.crbs.ucsd.edu/ucsd/atlas?service=WPS',
+        'whs'    :'http://incf-dev-local.crbs.ucsd.edu/whs/atlas?service=WPS',
         }
 
 
