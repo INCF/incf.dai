@@ -107,7 +107,7 @@ Omitting required arguments raises an ``ApplicationError``
 Traceback (most recent call last):
 ...
 ApplicationError: 
-Code: NotApplicableCode
+Code: NoApplicableCode
 Text: Unexpected exception occured
 URL:  http://incf-dev-local.crbs.ucsd.edu/whs/atlas?service=WPS&version=1.0.0&request=Execute&Identifier=DescribeSRS&ResponseForm=xml
 
