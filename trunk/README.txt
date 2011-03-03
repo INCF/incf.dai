@@ -47,7 +47,7 @@ For introspection the URL to the service controller for this hub is
 available as 
 
 >>> whs.base_url
-'http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS'
+'http://incf-dev-local.crbs.ucsd.edu/whs/atlas?service=WPS'
 
 There are two methods all hubs are expected to provide:
 
@@ -70,20 +70,25 @@ Calling any of those methods returns a custom response object
 Usually, there is no need to call any of the two methods mentioned 
 above as their main information returned is available anyway via
 
->>> whs.capabilities
-[u'DescribeSRS', u'GetStructureNamesByPOI', u'ListSRSs']
+>>> sorted(whs.capabilities)
+[u'DescribeSRS', u'GetStructureNamesByPOI', u'ListSRSs', u'ListTransformations', u'TransformPOI']
 
 and all methods listed are available on the hub proxy right away
 
 >>> sorted(whs.__dict__.keys())   # doctest: +NORMALIZE_WHITESPACE
-['DescribeSRS', 'GetStructureNamesByPOI', 'ListSRSs', 'base_url', 
+['DescribeSRS', 'GetStructureNamesByPOI', 'ListSRSs',
+u'ListTransformations', u'TransformPOI', 'base_url', 
 'capabilities', 'process_descriptions', 'proxy']
 
 like in 
 
 >>> response = whs.ListSRSs()
 >>> sorted(response.keys())
-[u'Orientations', u'QueryInfo', u'SRSList', u'xmlns', u'xmlns_gml']
+[u'service', u'serviceInstance', u'version', u'wps_Process', 
+u'wps_ProcessOutputs', u'wps_Status', u'xml_lang', u'xmlns_ogc', 
+u'xmlns_ows', u'xmlns_wps', u'xmlns_xlink', u'xmlns_xsi', 
+u'xsi_schemaLocation']
+
 
 >>> response['SRSList']  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 {SRS:[{Area:{structureName:u'whole brain'}, 
