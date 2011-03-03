@@ -43,17 +43,24 @@ class Response(object):
 
 
     def process_exceptions(self):
-        """Check for 4?? response codes raised by the service"""
+        """Check for 4?? response codes raised by the service as well
+        as 'ProcessFailed' in WPS Status"""
         status = self.headers['status']
         if status.startswith('4'):
+            return self.handle_exception()
+        if self.data is None:   # nothing left to process further
+            return None
+        wps_status = self.data.wps_Status
+        if wps_status and 'wps_ProcessFailed' in wps_status.keys():
             return self.handle_exception()
         return None
 
     def handle_exception(self):
         """Raise custom exception"""
         if self.data is not None:
-            raise ApplicationError(self.data.ows_Exception['exceptionCode'],
-                                   self.data.ows_Exception['ows_ExceptionText'],
+            report = self.data.wps_Status.wps_ProcessFailed.ows_ExceptionReport
+            raise ApplicationError(report.ows_Exception['exceptionCode'],
+                                   report.ows_Exception['ows_ExceptionText'],
                                    self.url,
                                    )
         else:

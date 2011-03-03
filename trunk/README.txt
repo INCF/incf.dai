@@ -90,14 +90,14 @@ u'xmlns_ows', u'xmlns_wps', u'xmlns_xlink', u'xmlns_xsi',
 u'xsi_schemaLocation']
 
 >>> response['wps_ProcessOutputs']['wps_Output']['wps_Data']['wps_ComplexData']['ListSRSResponse']['SRSCollection']['SRSList']  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-{SRS:[{Area:{structureName:u'whole brain'}, 
+{SRS:[{Area:{structureName:u'Whole Brain'}, 
        Author:{authorCode:u'WHS', ...
 
 For further convenience, the response object also supports attribute-like 
 access to the data as in
 
 >>> response.wps_Status  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-{creationTime: ... 
+{creationTime: ...
 
 Note how the namespaces are preserved as prefixes of the key and attribute names.
 
@@ -108,16 +108,16 @@ Traceback (most recent call last):
 ...
 ApplicationError: 
 Code: NotApplicableCode
-Text: Unrecognized URI.
-URL:  http://incf-dev.crbs.ucsd.edu:8080/atlas-whs?service=WPS&version=1.0.0&request=Execute&Identifier=DescribeSRS&ResponseForm=xml
+Text: Unexpected exception occured
+URL:  http://incf-dev-local.crbs.ucsd.edu/whs/atlas?service=WPS&version=1.0.0&request=Execute&Identifier=DescribeSRS&ResponseForm=xml
 
 whereas calling a method correctly gives and appropriate response (hopefully)
 
 >>> response = whs.GetStructureNamesByPOI(format=None, srsName="Mouse_paxinos_1.0", x='1', y='4.3', z='1.78')  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 >>> response.keys()
-[u'QueryInfo', u'xmlns_xsi', u'xmlns', u'StructureTerms']
->>> response.StructureTerms.StructureTerm.Code.data
-u'Bckgrnd'
+[u'xmlns_xlink', u'wps_Process', u'xml_lang', u'wps_Status', u'wps_ProcessOutputs', u'service', u'xmlns_xsi', u'xmlns_ows', u'xsi_schemaLocation', u'version', u'xmlns_ogc', u'xmlns_wps', u'serviceInstance']
+>>> response.wps_ProcessOutputs.wps_Output.wps_Data.wps_ComplexData.StructureTermsResponse.StructureTerms.StructureTerm.Code
+u'Cx'
 
 The ``format=None`` here works around issue
 http://code.google.com/p/incf-dai/issues/detail?id=14
