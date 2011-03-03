@@ -211,7 +211,7 @@ requires you to pass all arguments needed to construct the
 proper WPS request
 
 >>> response = whs_minimal(version='1.0.0', request='Execute', identifier='ListSRSs')
->>> sorted(response.keys()) 
+>>> sorted(response.keys()) # doctest: +NORMALIZE_WHITESPACE 
 [u'service', u'serviceInstance', u'version', u'wps_Process',
 u'wps_ProcessOutputs', u'wps_Status', u'xml_lang', u'xmlns_ogc',
 u'xmlns_ows', u'xmlns_wps', u'xmlns_xlink', u'xmlns_xsi',
