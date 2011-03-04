@@ -7,25 +7,25 @@ Comprehensive doctest for the INCF DAI hub provided by UCSD
 >>> from incf.dai.utils import get_hub_by_name
 >>> ucsd = get_hub_by_name('ucsd')
 >>> sorted(ucsd.capabilities)  # doctest: +NORMALIZE_WHITESPACE
-[u'DescribeSRS',
- u'Get2DImagesByPOI',
- u'GetCellsByPOI',
- u'GetCellsByURI',
- u'GetStructureNamesByPOI',
- u'GetTransformationChain',
- u'Images2DByURI',
- u'ListSRSs',
- u'ListTransformations',
- u'Retrieve2DImage',
+[u'DescribeSRS', 
+ u'Get2DImagesByPOI', 
+ u'GetStructureNamesByPOI', 
+ u'ListSRSs', 
+ u'ListTransformations', 
+ u'Retrieve2DImage', 
  u'TransformPOI']
 
 
 Checking ``ListSRSs``
 
 >>> r = ucsd.ListSRSs()
->>> r.keys()
-[u'QueryInfo', u'xmlns_gml', u'xmlns', u'Orientations', u'SRSList']
->>> r.SRSList.SRS.Name.data
+>>> r.keys()  # doctest: +NORMALIZE_WHITESPACE
+[u'xmlns_xlink', u'wps_Process', u'xml_lang', u'wps_Status', 
+u'wps_ProcessOutputs', u'service', u'xmlns_xsi', u'xmlns_ows', 
+u'xsi_schemaLocation', u'version', u'xmlns_ogc', u'xmlns_wps', 
+u'serviceInstance']
+>>> data = r.wps_ProcessOutputs.wps_Output.wps_Data.wps_ComplexData
+>>> data.ListSRSResponse.SRSCollection.SRSList.SRS.Name.data
 u'Mouse_Paxinos_1.0'
 
 
