@@ -46,15 +46,19 @@ Checking ``ListTransformations``
 
 Checking ``GetStructureNameByPOI``
 
->>> r = ucsd.GetStructureNamesByPOI(format=None, srsName='Mouse_paxinos_1.0', x='-2', y='-5.3', z='6', vocabulary='Mouse_paxinos_1.0', filter='structureset:Fine')
->>> r.StructureTerms.StructureTerm.Code.data
-u'VP'
->>> r.StructureTerms.StructureTerm.Name
+>>> r = ucsd.GetStructureNamesByPOI(format=None,srsName='Mouse_paxinos_1.0', x='1', y='4.3', z='1.78')
+>>> data = r.wps_ProcessOutputs.wps_Output.wps_Data.wps_ComplexData
+>>> data.StructureTermsResponse.StructureTerms.StructureTerm.Code.data
+u'S1Tr'
+>>> data.StructureTermsResponse.StructureTerms.StructureTerm.Name
 ''
->>> r.StructureTerms.StructureTerm.Description
-u'ventral pallidum'
+>>> data.StructureTermsResponse.StructureTerms.StructureTerm.Description
+u'primary somatosensory cortex'
 
 (why is ``Description`` populated but ``Name`` is empty?)
+
+Note to self: needed to omit the filter=structureset:fine from the
+initial call 
 
 
 Checking ``TransformPOI``
